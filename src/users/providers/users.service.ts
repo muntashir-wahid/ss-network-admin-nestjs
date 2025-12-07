@@ -13,7 +13,7 @@ export class UsersService {
     const user = await this.prismaService.user.create({
       data: {
         email: 'example@example2.com',
-        name: 'Example User',
+        name: 'Example User 2',
         password: await this.bcryptProvider.hashPassword('securepassword'),
       },
     });
