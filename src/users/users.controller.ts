@@ -1,7 +1,10 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './providers/users.service';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/generated/prisma/enums';
 
 @Controller('users')
+@Roles(Role.SUPER_ADMIN)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
