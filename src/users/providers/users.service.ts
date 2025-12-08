@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { BcryptProvider } from 'src/auth/providers/bcrypt.provider';
 import { PrismaService } from 'src/prisma.service';
 
@@ -6,10 +6,12 @@ import { PrismaService } from 'src/prisma.service';
 export class UsersService {
   constructor(
     private readonly prismaService: PrismaService,
+
+    @Inject(forwardRef(() => BcryptProvider))
     private readonly bcryptProvider: BcryptProvider,
   ) {}
 
-  async create() {
+  public async create() {
     const user = await this.prismaService.user.create({
       data: {
         email: 'example@example2.com',
@@ -21,15 +23,23 @@ export class UsersService {
     return user;
   }
 
-  async findAll() {
+  public async findAll() {
     return this.prismaService.user.findMany();
   }
 
-  async findById(uid: string) {
+  public async findById(uid: string) {
     console.log('Finding user by ID:', uid);
     return this.prismaService.user.findUnique({
       where: {
         uid: uid,
+      },
+    });
+  }
+
+  public async findByEmail(email: string) {
+    return this.prismaService.user.findUnique({
+      where: {
+        email: email,
       },
     });
   }
