@@ -8,7 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 
 @Module({
   providers: [BcryptProvider, AuthService],
-  exports: [BcryptProvider],
+  exports: [BcryptProvider, JwtModule],
   controllers: [AuthController],
   imports: [
     forwardRef(() => UsersModule),
