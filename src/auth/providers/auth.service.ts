@@ -7,6 +7,7 @@ import {
 import { UsersService } from 'src/users/providers/users.service';
 import { BcryptProvider } from './bcrypt.provider';
 import { JwtService } from '@nestjs/jwt';
+import { LoginDto } from '../dtos/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,15 +18,15 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  public async login() {
-    const user = await this.usersService.findByEmail('example@example2.com');
+  public async login(loginDto: LoginDto) {
+    const user = await this.usersService.findByEmail(loginDto.email);
 
     if (!user) {
       throw new UnauthorizedException('Email or password is incorrect');
     }
 
     const isPasswordValid = await this.bcryptProvider.comparePassword(
-      'securepassword',
+      loginDto.password,
       user.password,
     );
 

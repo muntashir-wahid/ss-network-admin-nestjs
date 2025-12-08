@@ -1,6 +1,7 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { BcryptProvider } from 'src/auth/providers/bcrypt.provider';
 import { PrismaService } from 'src/prisma.service';
+import { CreateAdminUserDto } from '../dtos/create-admin-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -11,20 +12,32 @@ export class UsersService {
     private readonly bcryptProvider: BcryptProvider,
   ) {}
 
-  public async create() {
+  public async create(createUserDto: CreateAdminUserDto) {
+    const payload = {
+      email: createUserDto.email,
+      name: createUserDto.name,
+      password: await this.bcryptProvider.hashPassword(createUserDto.password),
+      role: createUserDto.role || 'ADMIN',
+    };
+
     const user = await this.prismaService.user.create({
-      data: {
-        email: 'example@example2.com',
-        name: 'Example User 2',
-        password: await this.bcryptProvider.hashPassword('securepassword'),
-      },
+      data: payload,
     });
 
     return user;
   }
 
   public async findAll() {
-    return this.prismaService.user.findMany();
+    return this.prismaService.user.findMany({
+      select: {
+        uid: true,
+        email: true,
+        name: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   public async findById(uid: string) {
@@ -32,6 +45,14 @@ export class UsersService {
     return this.prismaService.user.findUnique({
       where: {
         uid: uid,
+      },
+      select: {
+        uid: true,
+        email: true,
+        name: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
   }
