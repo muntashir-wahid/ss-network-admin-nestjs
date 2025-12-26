@@ -8,7 +8,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1/');
   app.use(morgan('dev'));
   app.enableCors({
-    origin: ['http://localhost:3000'],
+    origin: 'http://localhost:3000',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
