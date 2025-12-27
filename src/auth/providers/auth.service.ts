@@ -38,6 +38,7 @@ export class AuthService {
       sub: user.uid,
       email: user.email,
       role: user.role,
+      name: user.name,
     });
 
     return { status: 'success', data: { accessToken } };

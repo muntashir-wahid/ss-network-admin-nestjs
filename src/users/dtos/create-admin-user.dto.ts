@@ -7,7 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { Role } from 'src/generated/prisma/enums';
+import { Role, Status } from 'src/generated/prisma/enums';
 
 export class CreateAdminUserDto {
   @IsString()
@@ -29,4 +29,8 @@ export class CreateAdminUserDto {
   @IsOptional()
   @IsEnum(Role, { message: 'Role must be either ADMIN or SUPER_ADMIN' })
   role?: Role;
+
+  @IsOptional()
+  @IsEnum(Status, { message: 'Status must be a valid status value' })
+  status?: Status;
 }

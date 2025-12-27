@@ -2,6 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { BcryptProvider } from 'src/auth/providers/bcrypt.provider';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAdminUserDto } from '../dtos/create-admin-user.dto';
+import { UpdateAdminUserDto } from '../dtos/update-admin-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -34,6 +35,7 @@ export class UsersService {
         email: true,
         name: true,
         role: true,
+        status: true,
       },
     });
   }
@@ -61,5 +63,26 @@ export class UsersService {
         email: email,
       },
     });
+  }
+
+  public async update(uid: string, updateUserDto: UpdateAdminUserDto) {
+    const payload = {
+      ...updateUserDto,
+    };
+
+    delete payload.password;
+
+    console.log('Updating user with payload:', payload);
+
+    const updatedUser = await this.prismaService.user.update({
+      where: {
+        uid: uid,
+      },
+      data: payload,
+    });
+
+    console.log('Updated user:', updatedUser);
+
+    return updatedUser;
   }
 }
