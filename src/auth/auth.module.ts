@@ -19,7 +19,7 @@ import { UsersModule } from 'src/users/users.module';
         secret: configService.get<string>('JWT_SECRET'),
         global: true,
         signOptions: {
-          expiresIn: '3600s',
+          expiresIn: '60s',
         },
       }),
     }),
