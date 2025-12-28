@@ -37,6 +37,9 @@ export class UsersService {
         role: true,
         status: true,
       },
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
   }
 
@@ -73,16 +76,19 @@ export class UsersService {
 
     delete payload.password;
 
-    console.log('Updating user with payload:', payload);
-
     const updatedUser = await this.prismaService.user.update({
       where: {
         uid: uid,
       },
       data: payload,
+      select: {
+        uid: true,
+        email: true,
+        name: true,
+        role: true,
+        status: true,
+      },
     });
-
-    console.log('Updated user:', updatedUser);
 
     return updatedUser;
   }
