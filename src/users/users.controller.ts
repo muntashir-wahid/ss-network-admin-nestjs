@@ -14,7 +14,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/prisma/enums';
 import { CreateAdminUserDto } from './dtos/create-admin-user.dto';
 import { UpdateAdminUserDto } from './dtos/update-admin-user.dto';
-import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
 @Controller('users')
 @Roles(Role.SUPER_ADMIN)
