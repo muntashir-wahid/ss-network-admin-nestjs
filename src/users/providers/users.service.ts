@@ -3,11 +3,13 @@ import { BcryptProvider } from 'src/auth/providers/bcrypt.provider';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAdminUserDto } from '../dtos/create-admin-user.dto';
 import { UpdateAdminUserDto } from '../dtos/update-admin-user.dto';
+import { ResponseFormatterService } from 'src/common/response-formatter/response-formatter.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly prismaService: PrismaService,
+    private readonly responseFormatterService: ResponseFormatterService,
 
     @Inject(forwardRef(() => BcryptProvider))
     private readonly bcryptProvider: BcryptProvider,
@@ -25,7 +27,10 @@ export class UsersService {
       data: payload,
     });
 
-    return user;
+    return this.responseFormatterService.formatSuccessResponse(
+      user,
+      'User created successfully',
+    );
   }
 
   public async findAll(currentUserId: string, page: number, limit: number) {
@@ -49,27 +54,24 @@ export class UsersService {
       },
     });
 
-    const totalUsers = await this.prismaService.user.count();
-
-    const response = {
-      status: 'success',
-      data: users,
-      meta: {
-        page: page,
-        perPage: limit,
-        total: totalUsers,
-        totalPages: Math.ceil(totalUsers / limit),
-        nextPage: page * limit < totalUsers ? page + 1 : null,
-        prevPage: page > 1 ? page - 1 : null,
+    const totalUsers = await this.prismaService.user.count({
+      where: {
+        uid: {
+          not: currentUserId,
+        },
       },
-    };
+    });
 
-    return response;
+    return this.responseFormatterService.formatPaginatedResponse(
+      users,
+      page,
+      limit,
+      totalUsers,
+    );
   }
 
   public async findById(uid: string) {
-    console.log('Finding user by ID:', uid);
-    return this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: {
         uid: uid,
       },
@@ -82,6 +84,8 @@ export class UsersService {
         updatedAt: true,
       },
     });
+
+    return this.responseFormatterService.formatSuccessResponse(user);
   }
 
   public async findByEmail(email: string) {
@@ -114,6 +118,9 @@ export class UsersService {
       },
     });
 
-    return updatedUser;
+    return this.responseFormatterService.formatSuccessResponse(
+      updatedUser,
+      'User updated successfully',
+    );
   }
 }
