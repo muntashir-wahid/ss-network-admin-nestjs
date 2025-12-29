@@ -28,8 +28,8 @@ export class UsersService {
     return user;
   }
 
-  public async findAll(currentUserId: string) {
-    return this.prismaService.user.findMany({
+  public async findAll(currentUserId: string, page: number, limit: number) {
+    const users = await this.prismaService.user.findMany({
       where: {
         uid: {
           not: currentUserId,
@@ -42,10 +42,29 @@ export class UsersService {
         role: true,
         status: true,
       },
+      skip: (page - 1) * limit,
+      take: limit,
       orderBy: {
         createdAt: 'asc',
       },
     });
+
+    const totalUsers = await this.prismaService.user.count();
+
+    const response = {
+      status: 'success',
+      data: users,
+      meta: {
+        page: page,
+        perPage: limit,
+        total: totalUsers,
+        totalPages: Math.ceil(totalUsers / limit),
+        nextPage: page * limit < totalUsers ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null,
+      },
+    };
+
+    return response;
   }
 
   public async findById(uid: string) {

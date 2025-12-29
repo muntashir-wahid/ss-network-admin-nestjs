@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './providers/users.service';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/prisma/enums';
@@ -17,8 +27,12 @@ export class UsersController {
   }
 
   @Get('')
-  getAllUsers(@CurrentUser('sub') uid: string) {
-    return this.usersService.findAll(uid);
+  getAllUsers(
+    @CurrentUser('sub') uid: string,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  ) {
+    return this.usersService.findAll(uid, page, limit);
   }
 
   @Get(':uid')
