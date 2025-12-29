@@ -28,8 +28,13 @@ export class UsersService {
     return user;
   }
 
-  public async findAll() {
+  public async findAll(currentUserId: string) {
     return this.prismaService.user.findMany({
+      where: {
+        uid: {
+          not: currentUserId,
+        },
+      },
       select: {
         uid: true,
         email: true,

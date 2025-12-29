@@ -4,6 +4,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/prisma/enums';
 import { CreateAdminUserDto } from './dtos/create-admin-user.dto';
 import { UpdateAdminUserDto } from './dtos/update-admin-user.dto';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 
 @Controller('users')
 @Roles(Role.SUPER_ADMIN)
@@ -16,8 +17,8 @@ export class UsersController {
   }
 
   @Get('')
-  getAllUsers() {
-    return this.usersService.findAll();
+  getAllUsers(@CurrentUser('sub') uid: string) {
+    return this.usersService.findAll(uid);
   }
 
   @Get(':uid')
