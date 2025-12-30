@@ -37,7 +37,6 @@ export class UsersController {
 
   @Get(':uid')
   getUserById(@Param('uid') uid: string) {
-    console.log('Received UID in controller:', uid);
     return this.usersService.findById(uid);
   }
 
@@ -46,7 +45,6 @@ export class UsersController {
     @Param('uid') uid: string,
     @Body() updateUserDto: UpdateAdminUserDto,
   ) {
-    console.log('Received UID in controller:', uid);
     return this.usersService.update(uid, updateUserDto);
   }
 }
