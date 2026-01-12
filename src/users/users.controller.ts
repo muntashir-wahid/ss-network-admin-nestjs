@@ -16,6 +16,9 @@ import { CreateAdminUserDto } from './dtos/create-admin-user.dto';
 import { UpdateAdminUserDto } from './dtos/update-admin-user.dto';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
+export type RoleQueryType = 'ADMIN' | 'SUPER_ADMIN' | 'ALL';
+export type StatusQueryType = 'ACTIVE' | 'DISABLED' | 'ALL';
+
 @Controller('users')
 @Roles(Role.SUPER_ADMIN)
 export class UsersController {
@@ -31,8 +34,12 @@ export class UsersController {
     @CurrentUser('sub') uid: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('role', new DefaultValuePipe('ALL'))
+    role: RoleQueryType,
+    @Query('search', new DefaultValuePipe('')) search: string,
+    @Query('status', new DefaultValuePipe('')) status: StatusQueryType,
   ) {
-    return this.usersService.findAll(uid, page, limit);
+    return this.usersService.findAll(uid, page, limit, role, search, status);
   }
 
   @Get(':uid')
