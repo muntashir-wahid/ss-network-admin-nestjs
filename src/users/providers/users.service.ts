@@ -47,6 +47,7 @@ export class UsersService {
         uid: {
           not: currentUserId,
         },
+
         ...(role !== 'ALL' ? { role: role } : {}),
         ...(search
           ? {
@@ -77,6 +78,16 @@ export class UsersService {
         uid: {
           not: currentUserId,
         },
+        ...(role !== 'ALL' ? { role: role } : {}),
+        ...(search
+          ? {
+              OR: [
+                { email: { contains: search, mode: 'insensitive' } },
+                { name: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
+        ...(status !== 'ALL' ? { status: status } : {}),
       },
     });
 

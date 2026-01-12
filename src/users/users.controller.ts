@@ -37,7 +37,7 @@ export class UsersController {
     @Query('role', new DefaultValuePipe('ALL'))
     role: RoleQueryType,
     @Query('search', new DefaultValuePipe('')) search: string,
-    @Query('status', new DefaultValuePipe('')) status: StatusQueryType,
+    @Query('status', new DefaultValuePipe('ALL')) status: StatusQueryType,
   ) {
     return this.usersService.findAll(uid, page, limit, role, search, status);
   }
