@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateAdminUserDto } from '../dtos/create-admin-user.dto';
 import { UpdateAdminUserDto } from '../dtos/update-admin-user.dto';
 import { ResponseFormatterService } from 'src/common/response-formatter/response-formatter.service';
+import { RoleQueryType, StatusQueryType } from '../users.controller';
 
 @Injectable()
 export class UsersService {
@@ -33,12 +34,30 @@ export class UsersService {
     );
   }
 
-  public async findAll(currentUserId: string, page: number, limit: number) {
+  public async findAll(
+    currentUserId: string,
+    page: number,
+    limit: number,
+    role: RoleQueryType,
+    search: string,
+    status: StatusQueryType,
+  ) {
     const users = await this.prismaService.user.findMany({
       where: {
         uid: {
           not: currentUserId,
         },
+
+        ...(role !== 'ALL' ? { role: role } : {}),
+        ...(search
+          ? {
+              OR: [
+                { email: { contains: search, mode: 'insensitive' } },
+                { name: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
+        ...(status !== 'ALL' ? { status: status } : {}),
       },
       select: {
         uid: true,
@@ -59,6 +78,16 @@ export class UsersService {
         uid: {
           not: currentUserId,
         },
+        ...(role !== 'ALL' ? { role: role } : {}),
+        ...(search
+          ? {
+              OR: [
+                { email: { contains: search, mode: 'insensitive' } },
+                { name: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
+        ...(status !== 'ALL' ? { status: status } : {}),
       },
     });
 
