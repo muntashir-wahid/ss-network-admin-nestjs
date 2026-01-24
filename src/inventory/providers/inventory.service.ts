@@ -28,6 +28,7 @@ export class InventoryService {
         assetName: true,
         price: true,
         stock: true,
+        description: true,
       },
     });
     const totalItems = await this.prismaService.inventory.count();
