@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { ResponseFormatterModule } from './common/response-formatter/response-formatter.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ResponseFormatterModule } from './common/response-formatter/response-fo
     UsersModule,
     AuthModule,
     ResponseFormatterModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [
