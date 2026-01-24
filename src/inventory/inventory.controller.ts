@@ -1,22 +1,25 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/prisma/browser';
+import { CreateInventoryItemDto } from './dtos/create-inventory-item.dto';
+import { InventoryService } from './providers/inventory.service';
 
 @Controller('inventory')
 @Roles(Role.SUPER_ADMIN, Role.ADMIN)
 export class InventoryController {
+  constructor(private readonly inventoryService: InventoryService) {}
   @Post()
-  createInventoryItem() {
-    return { message: 'Inventory item created' };
+  createInventoryItem(@Body() createInventoryItemDto: CreateInventoryItemDto) {
+    return this.inventoryService.create(createInventoryItemDto);
   }
 
   @Get()
   getAllInventoryItems() {
-    return { message: 'List of all inventory items' };
+    return this.inventoryService.findAll();
   }
 
   @Get(':uid')
-  getInventoryItemById() {
-    return { message: 'Inventory item details' };
+  getInventoryItemById(@Param('uid') uid: string) {
+    return this.inventoryService.findOne(uid);
   }
 }
