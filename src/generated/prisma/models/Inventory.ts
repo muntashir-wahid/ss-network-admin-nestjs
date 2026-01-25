@@ -236,6 +236,7 @@ export type InventoryWhereInput = {
   description?: Prisma.StringNullableFilter<"Inventory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
+  inventoryLogs?: Prisma.InventoryLogListRelationFilter
 }
 
 export type InventoryOrderByWithRelationInput = {
@@ -246,6 +247,7 @@ export type InventoryOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  inventoryLogs?: Prisma.InventoryLogOrderByRelationAggregateInput
 }
 
 export type InventoryWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +261,7 @@ export type InventoryWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"Inventory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
+  inventoryLogs?: Prisma.InventoryLogListRelationFilter
 }, "uid" | "assetName">
 
 export type InventoryOrderByWithAggregationInput = {
@@ -297,6 +300,7 @@ export type InventoryCreateInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  inventoryLogs?: Prisma.InventoryLogCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUncheckedCreateInput = {
@@ -307,6 +311,7 @@ export type InventoryUncheckedCreateInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  inventoryLogs?: Prisma.InventoryLogUncheckedCreateNestedManyWithoutInventoryInput
 }
 
 export type InventoryUpdateInput = {
@@ -317,6 +322,7 @@ export type InventoryUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryLogs?: Prisma.InventoryLogUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryUncheckedUpdateInput = {
@@ -327,6 +333,7 @@ export type InventoryUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  inventoryLogs?: Prisma.InventoryLogUncheckedUpdateManyWithoutInventoryNestedInput
 }
 
 export type InventoryCreateManyInput = {
@@ -399,6 +406,11 @@ export type InventorySumOrderByAggregateInput = {
   stock?: Prisma.SortOrder
 }
 
+export type InventoryScalarRelationFilter = {
+  is?: Prisma.InventoryWhereInput
+  isNot?: Prisma.InventoryWhereInput
+}
+
 export type DecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -415,6 +427,105 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type InventoryCreateNestedOneWithoutInventoryLogsInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryLogsInput, Prisma.InventoryUncheckedCreateWithoutInventoryLogsInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryLogsInput
+  connect?: Prisma.InventoryWhereUniqueInput
+}
+
+export type InventoryUpdateOneRequiredWithoutInventoryLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryLogsInput, Prisma.InventoryUncheckedCreateWithoutInventoryLogsInput>
+  connectOrCreate?: Prisma.InventoryCreateOrConnectWithoutInventoryLogsInput
+  upsert?: Prisma.InventoryUpsertWithoutInventoryLogsInput
+  connect?: Prisma.InventoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InventoryUpdateToOneWithWhereWithoutInventoryLogsInput, Prisma.InventoryUpdateWithoutInventoryLogsInput>, Prisma.InventoryUncheckedUpdateWithoutInventoryLogsInput>
+}
+
+export type InventoryCreateWithoutInventoryLogsInput = {
+  uid?: string
+  assetName: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  stock: number
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InventoryUncheckedCreateWithoutInventoryLogsInput = {
+  uid?: string
+  assetName: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  stock: number
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InventoryCreateOrConnectWithoutInventoryLogsInput = {
+  where: Prisma.InventoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryLogsInput, Prisma.InventoryUncheckedCreateWithoutInventoryLogsInput>
+}
+
+export type InventoryUpsertWithoutInventoryLogsInput = {
+  update: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryLogsInput, Prisma.InventoryUncheckedUpdateWithoutInventoryLogsInput>
+  create: Prisma.XOR<Prisma.InventoryCreateWithoutInventoryLogsInput, Prisma.InventoryUncheckedCreateWithoutInventoryLogsInput>
+  where?: Prisma.InventoryWhereInput
+}
+
+export type InventoryUpdateToOneWithWhereWithoutInventoryLogsInput = {
+  where?: Prisma.InventoryWhereInput
+  data: Prisma.XOR<Prisma.InventoryUpdateWithoutInventoryLogsInput, Prisma.InventoryUncheckedUpdateWithoutInventoryLogsInput>
+}
+
+export type InventoryUpdateWithoutInventoryLogsInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  assetName?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InventoryUncheckedUpdateWithoutInventoryLogsInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  assetName?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type InventoryCountOutputType
+ */
+
+export type InventoryCountOutputType = {
+  inventoryLogs: number
+}
+
+export type InventoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  inventoryLogs?: boolean | InventoryCountOutputTypeCountInventoryLogsArgs
+}
+
+/**
+ * InventoryCountOutputType without action
+ */
+export type InventoryCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InventoryCountOutputType
+   */
+  select?: Prisma.InventoryCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * InventoryCountOutputType without action
+ */
+export type InventoryCountOutputTypeCountInventoryLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InventoryLogWhereInput
+}
 
 
 export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -425,6 +536,8 @@ export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  inventoryLogs?: boolean | Prisma.Inventory$inventoryLogsArgs<ExtArgs>
+  _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventory"]>
 
 export type InventorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -458,10 +571,18 @@ export type InventorySelectScalar = {
 }
 
 export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "assetName" | "price" | "stock" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["inventory"]>
+export type InventoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  inventoryLogs?: boolean | Prisma.Inventory$inventoryLogsArgs<ExtArgs>
+  _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type InventoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type InventoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $InventoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Inventory"
-  objects: {}
+  objects: {
+    inventoryLogs: Prisma.$InventoryLogPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     uid: string
     assetName: string
@@ -864,6 +985,7 @@ readonly fields: InventoryFieldRefs;
  */
 export interface Prisma__InventoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  inventoryLogs<T extends Prisma.Inventory$inventoryLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Inventory$inventoryLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InventoryLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -917,6 +1039,10 @@ export type InventoryFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
+  /**
    * Filter, which Inventory to fetch.
    */
   where: Prisma.InventoryWhereUniqueInput
@@ -935,6 +1061,10 @@ export type InventoryFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
+  /**
    * Filter, which Inventory to fetch.
    */
   where: Prisma.InventoryWhereUniqueInput
@@ -952,6 +1082,10 @@ export type InventoryFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the Inventory
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
   /**
    * Filter, which Inventory to fetch.
    */
@@ -1001,6 +1135,10 @@ export type InventoryFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
+  /**
    * Filter, which Inventory to fetch.
    */
   where?: Prisma.InventoryWhereInput
@@ -1049,6 +1187,10 @@ export type InventoryFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
+  /**
    * Filter, which Inventories to fetch.
    */
   where?: Prisma.InventoryWhereInput
@@ -1091,6 +1233,10 @@ export type InventoryCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Inventory
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
   /**
    * The data needed to create a Inventory.
    */
@@ -1139,6 +1285,10 @@ export type InventoryUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Inventory
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
   /**
    * The data needed to update a Inventory.
    */
@@ -1206,6 +1356,10 @@ export type InventoryUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
+  /**
    * The filter to search for the Inventory to update in case it exists.
    */
   where: Prisma.InventoryWhereUniqueInput
@@ -1232,6 +1386,10 @@ export type InventoryDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
+  /**
    * Filter which Inventory to delete.
    */
   where: Prisma.InventoryWhereUniqueInput
@@ -1252,6 +1410,30 @@ export type InventoryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * Inventory.inventoryLogs
+ */
+export type Inventory$inventoryLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InventoryLog
+   */
+  select?: Prisma.InventoryLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InventoryLog
+   */
+  omit?: Prisma.InventoryLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryLogInclude<ExtArgs> | null
+  where?: Prisma.InventoryLogWhereInput
+  orderBy?: Prisma.InventoryLogOrderByWithRelationInput | Prisma.InventoryLogOrderByWithRelationInput[]
+  cursor?: Prisma.InventoryLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InventoryLogScalarFieldEnum | Prisma.InventoryLogScalarFieldEnum[]
+}
+
+/**
  * Inventory without action
  */
 export type InventoryDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1263,4 +1445,8 @@ export type InventoryDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Inventory
    */
   omit?: Prisma.InventoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InventoryInclude<ExtArgs> | null
 }

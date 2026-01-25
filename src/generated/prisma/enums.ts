@@ -23,3 +23,13 @@ export const Status = {
 } as const
 
 export type Status = (typeof Status)[keyof typeof Status]
+
+
+export const InventoryChangeType = {
+  DISPATCH: 'DISPATCH',
+  UPDATE: 'UPDATE',
+  STOCK_UPDATE: 'STOCK_UPDATE',
+  PRICE_CHANGE: 'PRICE_CHANGE'
+} as const
+
+export type InventoryChangeType = (typeof InventoryChangeType)[keyof typeof InventoryChangeType]

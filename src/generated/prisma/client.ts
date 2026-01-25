@@ -47,3 +47,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Inventory = Prisma.InventoryModel
+/**
+ * Model InventoryLog
+ * 
+ */
+export type InventoryLog = Prisma.InventoryLogModel
