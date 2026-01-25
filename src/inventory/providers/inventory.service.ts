@@ -156,4 +156,79 @@ export class InventoryService {
       'Inventory logs retrieved successfully',
     );
   }
+
+  public async getStats() {
+    // Run all queries concurrently for better performance
+    const [inStockCount, mediumStockCount, outOfStockCount, lowStockCount] =
+      await Promise.all([
+        // In Stock (10+ items)
+        this.prismaService.inventory.count({
+          where: { stock: { gte: 10 } },
+        }),
+
+        // Medium Stock (5-9 items)
+        this.prismaService.inventory.count({
+          where: { stock: { gte: 5, lte: 9 } },
+        }),
+
+        // Out of Stock (0 items)
+        this.prismaService.inventory.count({
+          where: { stock: 0 },
+        }),
+
+        // Low Stock (1-4 items)
+        this.prismaService.inventory.count({
+          where: { stock: { gte: 1, lte: 4 } },
+        }),
+      ]);
+
+    // Calculate actual total value (we need to do this manually since Prisma doesn't support calculated fields in aggregation)
+    const inventoryItems = await this.prismaService.inventory.findMany({
+      select: {
+        price: true,
+        stock: true,
+      },
+      where: {
+        stock: { gt: 0 },
+      },
+    });
+
+    const totalStockValueCalculated = inventoryItems.reduce(
+      (total, item) => total + Number(item.price) * item.stock,
+      0,
+    );
+
+    const inventoryData = [
+      {
+        name: 'In Stock',
+        value: inStockCount,
+        color: '#22c55e',
+      },
+      {
+        name: 'Critical Stock',
+        value: mediumStockCount,
+        color: '#f59e0b',
+      },
+      {
+        name: 'Out of Stock',
+        value: outOfStockCount,
+        color: '#ef4444',
+      },
+      {
+        name: 'Low Stock',
+        value: lowStockCount,
+        color: '#dc2626',
+      },
+    ];
+
+    return this.responseFormatterService.formatSuccessResponse(
+      {
+        inventoryData,
+        totalStockValue: totalStockValueCalculated,
+        totalItems:
+          inStockCount + mediumStockCount + outOfStockCount + lowStockCount,
+      },
+      'Inventory stats retrieved successfully',
+    );
+  }
 }
