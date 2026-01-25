@@ -132,6 +132,22 @@ export class InventoryService {
               },
             }),
       },
+      select: {
+        uid: true,
+        admin: {
+          select: {
+            uid: true,
+            name: true,
+          },
+        },
+        changeType: true,
+        previousPrice: true,
+        updatedPrice: true,
+        previousStock: true,
+        updatedStock: true,
+        note: true,
+        createdAt: true,
+      },
       orderBy: { createdAt: 'desc' },
     });
 
