@@ -38,7 +38,7 @@ model User {
 
 model Inventory {
   uid         String  @id @default(uuid())
-  assetName   String
+  assetName   String  @unique
   price       Decimal
   stock       Int
   description String?

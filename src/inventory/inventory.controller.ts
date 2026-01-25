@@ -1,8 +1,24 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { CreateInventoryItemDto } from './dtos/create-inventory-item.dto';
 import { InventoryService } from './providers/inventory.service';
 import { Role } from 'src/generated/prisma/enums';
+
+export type StockQueryType =
+  | 'IN_STOCK'
+  | 'LOW'
+  | 'ALL'
+  | 'MEDIUM'
+  | 'OUT_OF_STOCK';
 
 @Controller('inventory')
 @Roles(Role.SUPER_ADMIN, Role.ADMIN)
@@ -14,8 +30,13 @@ export class InventoryController {
   }
 
   @Get()
-  getAllInventoryItems() {
-    return this.inventoryService.findAll();
+  getAllInventoryItems(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('search', new DefaultValuePipe('')) search: string,
+    @Query('stock', new DefaultValuePipe('')) stock: StockQueryType,
+  ) {
+    return this.inventoryService.findAll(page, limit, search, stock);
   }
 
   @Get(':uid')

@@ -250,16 +250,16 @@ export type InventoryOrderByWithRelationInput = {
 
 export type InventoryWhereUniqueInput = Prisma.AtLeast<{
   uid?: string
+  assetName?: string
   AND?: Prisma.InventoryWhereInput | Prisma.InventoryWhereInput[]
   OR?: Prisma.InventoryWhereInput[]
   NOT?: Prisma.InventoryWhereInput | Prisma.InventoryWhereInput[]
-  assetName?: Prisma.StringFilter<"Inventory"> | string
   price?: Prisma.DecimalFilter<"Inventory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFilter<"Inventory"> | number
   description?: Prisma.StringNullableFilter<"Inventory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
-}, "uid">
+}, "uid" | "assetName">
 
 export type InventoryOrderByWithAggregationInput = {
   uid?: Prisma.SortOrder
