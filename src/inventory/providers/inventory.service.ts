@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ResponseFormatterService } from 'src/common/response-formatter/response-formatter.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateInventoryItemDto } from '../dtos/create-inventory-item.dto';
-import { StockQueryType } from '../inventory.controller';
+import { InventoryLogType, StockQueryType } from '../inventory.controller';
+import { PatchInventoryLogDto } from '../dtos/patch-inventory-item.dto';
+import { UpdateInventoryItemProvider } from './update-inventory-item.provider';
 
 function stockQuery(stock: StockQueryType) {
   if (stock === 'ALL') {
@@ -23,6 +25,7 @@ export class InventoryService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly responseFormatterService: ResponseFormatterService,
+    private readonly updateInventoryItemProvider: UpdateInventoryItemProvider,
   ) {}
 
   public async create(createInventoryItemDto: CreateInventoryItemDto) {
@@ -87,6 +90,54 @@ export class InventoryService {
     return this.responseFormatterService.formatSuccessResponse(
       inventoryItem,
       'Inventory item retrieved successfully',
+    );
+  }
+
+  public async update(
+    uid: string,
+    adminUid: string,
+    patchInventoryDto: PatchInventoryLogDto,
+  ) {
+    const result = await this.updateInventoryItemProvider.execute(
+      uid,
+      adminUid,
+      patchInventoryDto,
+    );
+
+    return this.responseFormatterService.formatSuccessResponse(
+      result,
+      'Inventory item updated successfully',
+    );
+  }
+
+  public async getInventoryLogs(uid: string, type: InventoryLogType) {
+    console.log(
+      type !== 'DISPATCH'
+        ? { changeType: 'DISPATCH' }
+        : {
+            changeType: {
+              not: 'DISPATCH',
+            },
+          },
+    );
+
+    const logs = await this.prismaService.inventoryLog.findMany({
+      where: {
+        inventoryUid: uid,
+        ...(type === 'DISPATCH'
+          ? { changeType: 'DISPATCH' }
+          : {
+              changeType: {
+                not: 'DISPATCH',
+              },
+            }),
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      logs,
+      'Inventory logs retrieved successfully',
     );
   }
 }

@@ -24,16 +24,24 @@ enum Status {
   DISABLED
 }
 
+enum InventoryChangeType {
+  DISPATCH
+  UPDATE
+  STOCK_UPDATE
+  PRICE_CHANGE
+}
+
 // Define your database schema here
 model User {
-  uid       String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  password  String
-  role      Role     @default(ADMIN)
-  status    Status   @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  uid           String         @id @default(uuid())
+  email         String         @unique
+  name          String?
+  password      String
+  role          Role           @default(ADMIN)
+  status        Status         @default(ACTIVE)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  inventoryLogs InventoryLog[]
 }
 
 model Inventory {
@@ -43,6 +51,25 @@ model Inventory {
   stock       Int
   description String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  inventoryLogs InventoryLog[]
+}
+
+model InventoryLog {
+  uid           String              @id @default(uuid())
+  inventoryUid  String
+  adminUid      String
+  changeType    InventoryChangeType
+  updatedStock  Int
+  previousStock Int
+  updatedPrice  Decimal
+  previousPrice Decimal
+  note          String?
+  createdAt     DateTime            @default(now())
+
+  inventory Inventory @relation(fields: [inventoryUid], references: [uid])
+  admin     User      @relation(fields: [adminUid], references: [uid])
+
+  @@index([inventoryUid])
 }

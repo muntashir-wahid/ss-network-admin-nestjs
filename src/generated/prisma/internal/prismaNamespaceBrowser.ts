@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Inventory: 'Inventory'
+  Inventory: 'Inventory',
+  InventoryLog: 'InventoryLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -96,6 +97,22 @@ export const InventoryScalarFieldEnum = {
 } as const
 
 export type InventoryScalarFieldEnum = (typeof InventoryScalarFieldEnum)[keyof typeof InventoryScalarFieldEnum]
+
+
+export const InventoryLogScalarFieldEnum = {
+  uid: 'uid',
+  inventoryUid: 'inventoryUid',
+  adminUid: 'adminUid',
+  changeType: 'changeType',
+  updatedStock: 'updatedStock',
+  previousStock: 'previousStock',
+  updatedPrice: 'updatedPrice',
+  previousPrice: 'previousPrice',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type InventoryLogScalarFieldEnum = (typeof InventoryLogScalarFieldEnum)[keyof typeof InventoryLogScalarFieldEnum]
 
 
 export const SortOrder = {
