@@ -44,6 +44,11 @@ export class InventoryController {
     return this.inventoryService.findAll(page, limit, search, stock);
   }
 
+  @Get('stats')
+  getInventoryStats() {
+    return this.inventoryService.getStats();
+  }
+
   @Get(':uid')
   getInventoryItemById(@Param('uid') uid: string) {
     return this.inventoryService.findOne(uid);
