@@ -53,7 +53,9 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Inventory: 'Inventory',
-  InventoryLog: 'InventoryLog'
+  InventoryLog: 'InventoryLog',
+  Zone: 'Zone',
+  Area: 'Area'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -114,6 +116,27 @@ export const InventoryLogScalarFieldEnum = {
 } as const
 
 export type InventoryLogScalarFieldEnum = (typeof InventoryLogScalarFieldEnum)[keyof typeof InventoryLogScalarFieldEnum]
+
+
+export const ZoneScalarFieldEnum = {
+  uid: 'uid',
+  zoneName: 'zoneName',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ZoneScalarFieldEnum = (typeof ZoneScalarFieldEnum)[keyof typeof ZoneScalarFieldEnum]
+
+
+export const AreaScalarFieldEnum = {
+  uid: 'uid',
+  areaName: 'areaName',
+  zoneUid: 'zoneUid',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AreaScalarFieldEnum = (typeof AreaScalarFieldEnum)[keyof typeof AreaScalarFieldEnum]
 
 
 export const SortOrder = {

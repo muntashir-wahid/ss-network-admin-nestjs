@@ -52,3 +52,13 @@ export type Inventory = Prisma.InventoryModel
  * 
  */
 export type InventoryLog = Prisma.InventoryLogModel
+/**
+ * Model Zone
+ * 
+ */
+export type Zone = Prisma.ZoneModel
+/**
+ * Model Area
+ * 
+ */
+export type Area = Prisma.AreaModel

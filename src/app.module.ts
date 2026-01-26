@@ -10,6 +10,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { ResponseFormatterModule } from './common/response-formatter/response-formatter.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { ZoneModule } from './zone/zone.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { InventoryModule } from './inventory/inventory.module';
     AuthModule,
     ResponseFormatterModule,
     InventoryModule,
+    ZoneModule,
   ],
   controllers: [AppController],
   providers: [

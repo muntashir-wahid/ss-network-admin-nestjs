@@ -74,3 +74,23 @@ model InventoryLog {
 
   @@index([inventoryUid])
 }
+
+model Zone {
+  uid      String @id @default(uuid())
+  zoneName String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  areas Area[]
+}
+
+model Area {
+  uid      String @id @default(uuid())
+  areaName String @unique
+  zoneUid  String
+  zone     Zone   @relation(fields: [zoneUid], references: [uid], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

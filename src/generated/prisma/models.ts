@@ -11,4 +11,6 @@
 export type * from './models/User.js'
 export type * from './models/Inventory.js'
 export type * from './models/InventoryLog.js'
+export type * from './models/Zone.js'
+export type * from './models/Area.js'
 export type * from './commonInputTypes.js'
