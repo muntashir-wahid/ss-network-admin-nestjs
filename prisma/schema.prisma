@@ -45,11 +45,12 @@ model User {
 }
 
 model Inventory {
-  uid         String  @id @default(uuid())
-  assetName   String  @unique
-  price       Decimal
-  stock       Int
-  description String?
+  uid            String  @id @default(uuid())
+  assetName      String  @unique
+  price          Decimal
+  stock          Int
+  totalPurchased Int     @default(0)
+  description    String?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -68,7 +69,7 @@ model InventoryLog {
   note          String?
   createdAt     DateTime            @default(now())
 
-  inventory Inventory @relation(fields: [inventoryUid], references: [uid])
+  inventory Inventory @relation(fields: [inventoryUid], references: [uid], onDelete: Cascade)
   admin     User      @relation(fields: [adminUid], references: [uid])
 
   @@index([inventoryUid])
