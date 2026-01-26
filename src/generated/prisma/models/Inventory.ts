@@ -29,11 +29,13 @@ export type AggregateInventory = {
 export type InventoryAvgAggregateOutputType = {
   price: runtime.Decimal | null
   stock: number | null
+  totalPurchased: number | null
 }
 
 export type InventorySumAggregateOutputType = {
   price: runtime.Decimal | null
   stock: number | null
+  totalPurchased: number | null
 }
 
 export type InventoryMinAggregateOutputType = {
@@ -41,6 +43,7 @@ export type InventoryMinAggregateOutputType = {
   assetName: string | null
   price: runtime.Decimal | null
   stock: number | null
+  totalPurchased: number | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -51,6 +54,7 @@ export type InventoryMaxAggregateOutputType = {
   assetName: string | null
   price: runtime.Decimal | null
   stock: number | null
+  totalPurchased: number | null
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -61,6 +65,7 @@ export type InventoryCountAggregateOutputType = {
   assetName: number
   price: number
   stock: number
+  totalPurchased: number
   description: number
   createdAt: number
   updatedAt: number
@@ -71,11 +76,13 @@ export type InventoryCountAggregateOutputType = {
 export type InventoryAvgAggregateInputType = {
   price?: true
   stock?: true
+  totalPurchased?: true
 }
 
 export type InventorySumAggregateInputType = {
   price?: true
   stock?: true
+  totalPurchased?: true
 }
 
 export type InventoryMinAggregateInputType = {
@@ -83,6 +90,7 @@ export type InventoryMinAggregateInputType = {
   assetName?: true
   price?: true
   stock?: true
+  totalPurchased?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -93,6 +101,7 @@ export type InventoryMaxAggregateInputType = {
   assetName?: true
   price?: true
   stock?: true
+  totalPurchased?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -103,6 +112,7 @@ export type InventoryCountAggregateInputType = {
   assetName?: true
   price?: true
   stock?: true
+  totalPurchased?: true
   description?: true
   createdAt?: true
   updatedAt?: true
@@ -200,6 +210,7 @@ export type InventoryGroupByOutputType = {
   assetName: string
   price: runtime.Decimal
   stock: number
+  totalPurchased: number
   description: string | null
   createdAt: Date
   updatedAt: Date
@@ -233,6 +244,7 @@ export type InventoryWhereInput = {
   assetName?: Prisma.StringFilter<"Inventory"> | string
   price?: Prisma.DecimalFilter<"Inventory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFilter<"Inventory"> | number
+  totalPurchased?: Prisma.IntFilter<"Inventory"> | number
   description?: Prisma.StringNullableFilter<"Inventory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
@@ -244,6 +256,7 @@ export type InventoryOrderByWithRelationInput = {
   assetName?: Prisma.SortOrder
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -258,6 +271,7 @@ export type InventoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InventoryWhereInput | Prisma.InventoryWhereInput[]
   price?: Prisma.DecimalFilter<"Inventory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFilter<"Inventory"> | number
+  totalPurchased?: Prisma.IntFilter<"Inventory"> | number
   description?: Prisma.StringNullableFilter<"Inventory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Inventory"> | Date | string
@@ -269,6 +283,7 @@ export type InventoryOrderByWithAggregationInput = {
   assetName?: Prisma.SortOrder
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -287,6 +302,7 @@ export type InventoryScalarWhereWithAggregatesInput = {
   assetName?: Prisma.StringWithAggregatesFilter<"Inventory"> | string
   price?: Prisma.DecimalWithAggregatesFilter<"Inventory"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
+  totalPurchased?: Prisma.IntWithAggregatesFilter<"Inventory"> | number
   description?: Prisma.StringNullableWithAggregatesFilter<"Inventory"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Inventory"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Inventory"> | Date | string
@@ -297,6 +313,7 @@ export type InventoryCreateInput = {
   assetName: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock: number
+  totalPurchased?: number
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -308,6 +325,7 @@ export type InventoryUncheckedCreateInput = {
   assetName: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock: number
+  totalPurchased?: number
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -319,6 +337,7 @@ export type InventoryUpdateInput = {
   assetName?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPurchased?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -330,6 +349,7 @@ export type InventoryUncheckedUpdateInput = {
   assetName?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPurchased?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -341,6 +361,7 @@ export type InventoryCreateManyInput = {
   assetName: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock: number
+  totalPurchased?: number
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -351,6 +372,7 @@ export type InventoryUpdateManyMutationInput = {
   assetName?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPurchased?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,6 +383,7 @@ export type InventoryUncheckedUpdateManyInput = {
   assetName?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPurchased?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,6 +394,7 @@ export type InventoryCountOrderByAggregateInput = {
   assetName?: Prisma.SortOrder
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -379,6 +403,7 @@ export type InventoryCountOrderByAggregateInput = {
 export type InventoryAvgOrderByAggregateInput = {
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
 }
 
 export type InventoryMaxOrderByAggregateInput = {
@@ -386,6 +411,7 @@ export type InventoryMaxOrderByAggregateInput = {
   assetName?: Prisma.SortOrder
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -396,6 +422,7 @@ export type InventoryMinOrderByAggregateInput = {
   assetName?: Prisma.SortOrder
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -404,6 +431,7 @@ export type InventoryMinOrderByAggregateInput = {
 export type InventorySumOrderByAggregateInput = {
   price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  totalPurchased?: Prisma.SortOrder
 }
 
 export type InventoryScalarRelationFilter = {
@@ -446,6 +474,7 @@ export type InventoryCreateWithoutInventoryLogsInput = {
   assetName: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock: number
+  totalPurchased?: number
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -456,6 +485,7 @@ export type InventoryUncheckedCreateWithoutInventoryLogsInput = {
   assetName: string
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock: number
+  totalPurchased?: number
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -482,6 +512,7 @@ export type InventoryUpdateWithoutInventoryLogsInput = {
   assetName?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPurchased?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -492,6 +523,7 @@ export type InventoryUncheckedUpdateWithoutInventoryLogsInput = {
   assetName?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPurchased?: Prisma.IntFieldUpdateOperationsInput | number
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -533,6 +565,7 @@ export type InventorySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   assetName?: boolean
   price?: boolean
   stock?: boolean
+  totalPurchased?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -545,6 +578,7 @@ export type InventorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   assetName?: boolean
   price?: boolean
   stock?: boolean
+  totalPurchased?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -555,6 +589,7 @@ export type InventorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   assetName?: boolean
   price?: boolean
   stock?: boolean
+  totalPurchased?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -565,12 +600,13 @@ export type InventorySelectScalar = {
   assetName?: boolean
   price?: boolean
   stock?: boolean
+  totalPurchased?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "assetName" | "price" | "stock" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["inventory"]>
+export type InventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "assetName" | "price" | "stock" | "totalPurchased" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["inventory"]>
 export type InventoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   inventoryLogs?: boolean | Prisma.Inventory$inventoryLogsArgs<ExtArgs>
   _count?: boolean | Prisma.InventoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -588,6 +624,7 @@ export type $InventoryPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     assetName: string
     price: runtime.Decimal
     stock: number
+    totalPurchased: number
     description: string | null
     createdAt: Date
     updatedAt: Date
@@ -1019,6 +1056,7 @@ export interface InventoryFieldRefs {
   readonly assetName: Prisma.FieldRef<"Inventory", 'String'>
   readonly price: Prisma.FieldRef<"Inventory", 'Decimal'>
   readonly stock: Prisma.FieldRef<"Inventory", 'Int'>
+  readonly totalPurchased: Prisma.FieldRef<"Inventory", 'Int'>
   readonly description: Prisma.FieldRef<"Inventory", 'String'>
   readonly createdAt: Prisma.FieldRef<"Inventory", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Inventory", 'DateTime'>

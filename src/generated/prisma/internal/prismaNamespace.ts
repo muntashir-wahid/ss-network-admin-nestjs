@@ -686,6 +686,7 @@ export const InventoryScalarFieldEnum = {
   assetName: 'assetName',
   price: 'price',
   stock: 'stock',
+  totalPurchased: 'totalPurchased',
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

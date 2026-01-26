@@ -29,8 +29,13 @@ export class InventoryService {
   ) {}
 
   public async create(createInventoryItemDto: CreateInventoryItemDto) {
+    const payload = {
+      ...createInventoryItemDto,
+      totalPurchased: createInventoryItemDto.stock,
+    };
+
     const inventoryItem = await this.prismaService.inventory.create({
-      data: createInventoryItemDto,
+      data: payload,
     });
 
     return this.responseFormatterService.formatSuccessResponse(

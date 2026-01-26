@@ -30,7 +30,14 @@ export class UpdateInventoryItemProvider {
                 : {}),
               ...(patchInventoryDto.updatedStock !==
               patchInventoryDto.previousStock
-                ? { stock: patchInventoryDto.updatedStock }
+                ? {
+                    stock: patchInventoryDto.updatedStock,
+                    totalPurchased: {
+                      increment:
+                        patchInventoryDto.updatedStock -
+                        patchInventoryDto.previousStock,
+                    },
+                  }
                 : {}),
               ...(patchInventoryDto.assetName
                 ? { assetName: patchInventoryDto.assetName }
