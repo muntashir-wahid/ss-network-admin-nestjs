@@ -3,7 +3,9 @@ import {
   Controller,
   DefaultValuePipe,
   Get,
+  Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -11,6 +13,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/prisma/enums';
 import { ZoneService } from './providers/zone.service';
 import { CreateZoneDto } from './dtos/create-zone.dto';
+import { UpdateZoneDto } from './dtos/update-zone.dto';
 
 @Controller('zones')
 @Roles(Role.SUPER_ADMIN)
@@ -28,5 +31,15 @@ export class ZoneController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
   ) {
     return this.zoneService.findAll(page, limit);
+  }
+
+  @Get(':uid')
+  getZoneByUid(@Param('uid') uid: string) {
+    return this.zoneService.findByUid(uid);
+  }
+
+  @Patch(':uid')
+  updateZone(@Param('uid') uid: string, @Body() updateZoneDto: UpdateZoneDto) {
+    return this.zoneService.updateByUid(uid, updateZoneDto);
   }
 }
