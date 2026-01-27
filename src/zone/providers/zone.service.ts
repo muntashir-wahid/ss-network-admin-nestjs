@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateZoneDto } from '../dtos/create-zone.dto';
 import { ResponseFormatterService } from 'src/common/response-formatter/response-formatter.service';
+import { UpdateZoneDto } from '../dtos/update-zone.dto';
 
 @Injectable()
 export class ZoneService {
@@ -67,6 +68,27 @@ export class ZoneService {
     return this.responseFormatterService.formatSuccessResponse(
       zone,
       'Zone retrieved successfully',
+    );
+  }
+
+  public async updateByUid(uid: string, updateZoneDto: UpdateZoneDto) {
+    const zone = await this.prismaService.zone.update({
+      where: { uid },
+      data: {
+        ...(updateZoneDto.zoneName ? { zoneName: updateZoneDto.zoneName } : {}),
+        areas: {
+          createMany: {
+            data: updateZoneDto.areaNames
+              ? updateZoneDto.areaNames.map((name) => ({ areaName: name }))
+              : [],
+          },
+        },
+      },
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      zone,
+      'Zone updated successfully',
     );
   }
 }
