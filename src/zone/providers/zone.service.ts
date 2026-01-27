@@ -56,4 +56,17 @@ export class ZoneService {
       totalItems,
     );
   }
+
+  public async findByUid(uid: string) {
+    const zone = await this.prismaService.zone.findUnique({
+      where: { uid },
+      include: {
+        areas: true,
+      },
+    });
+    return this.responseFormatterService.formatSuccessResponse(
+      zone,
+      'Zone retrieved successfully',
+    );
+  }
 }

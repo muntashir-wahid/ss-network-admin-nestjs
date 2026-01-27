@@ -3,6 +3,7 @@ import {
   Controller,
   DefaultValuePipe,
   Get,
+  Param,
   ParseIntPipe,
   Post,
   Query,
@@ -28,5 +29,10 @@ export class ZoneController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
   ) {
     return this.zoneService.findAll(page, limit);
+  }
+
+  @Get(':uid')
+  getZoneByUid(@Param('uid') uid: string) {
+    return this.zoneService.findByUid(uid);
   }
 }
