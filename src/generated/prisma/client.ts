@@ -62,3 +62,8 @@ export type Zone = Prisma.ZoneModel
  * 
  */
 export type Area = Prisma.AreaModel
+/**
+ * Model Client
+ * 
+ */
+export type Client = Prisma.ClientModel

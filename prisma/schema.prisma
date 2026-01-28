@@ -82,7 +82,8 @@ model Zone {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  areas Area[]
+  areas   Area[]
+  clients Client[]
 }
 
 model Area {
@@ -90,6 +91,24 @@ model Area {
   areaName String @unique
   zoneUid  String
   zone     Zone   @relation(fields: [zoneUid], references: [uid], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Client {
+  uid            String   @id @default(uuid())
+  contact        String   @unique
+  email          String?  @unique
+  userId         String   @unique
+  clientName     String
+  addressLine    String
+  connectionDate DateTime
+  status         Status   @default(ACTIVE)
+  package        String
+  mpbsProvided   Int?
+  zoneId         String
+  zone           Zone     @relation(fields: [zoneId], references: [uid])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
