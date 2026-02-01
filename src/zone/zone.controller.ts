@@ -25,6 +25,7 @@ export class ZoneController {
     return this.zoneService.create(createZoneDto);
   }
 
+  @Roles(Role.SUPER_ADMIN, Role.ADMIN)
   @Get()
   getAllZones(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,

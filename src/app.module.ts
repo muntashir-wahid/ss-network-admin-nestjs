@@ -12,6 +12,7 @@ import { ResponseFormatterModule } from './common/response-formatter/response-fo
 import { InventoryModule } from './inventory/inventory.module';
 import { ZoneModule } from './zone/zone.module';
 import { AreasModule } from './areas/areas.module';
+import { ClientsModule } from './clients/clients.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AreasModule } from './areas/areas.module';
     InventoryModule,
     ZoneModule,
     AreasModule,
+    ClientsModule,
   ],
   controllers: [AppController],
   providers: [

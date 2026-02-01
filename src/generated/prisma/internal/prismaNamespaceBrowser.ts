@@ -55,7 +55,8 @@ export const ModelName = {
   Inventory: 'Inventory',
   InventoryLog: 'InventoryLog',
   Zone: 'Zone',
-  Area: 'Area'
+  Area: 'Area',
+  Client: 'Client'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -137,6 +138,25 @@ export const AreaScalarFieldEnum = {
 } as const
 
 export type AreaScalarFieldEnum = (typeof AreaScalarFieldEnum)[keyof typeof AreaScalarFieldEnum]
+
+
+export const ClientScalarFieldEnum = {
+  uid: 'uid',
+  contact: 'contact',
+  email: 'email',
+  userId: 'userId',
+  clientName: 'clientName',
+  addressLine: 'addressLine',
+  connectionDate: 'connectionDate',
+  status: 'status',
+  package: 'package',
+  mpbsProvided: 'mpbsProvided',
+  zoneId: 'zoneId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
 
 
 export const SortOrder = {
