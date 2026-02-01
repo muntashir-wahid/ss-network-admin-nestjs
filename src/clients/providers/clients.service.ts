@@ -34,6 +34,32 @@ export class ClientsService {
     );
   }
 
+  public async getBulk() {
+    const clients = await this.prismaService.client.findMany({
+      where: {
+        status: Status.ACTIVE,
+      },
+      select: {
+        clientName: true,
+        contact: true,
+        userId: true,
+        package: true,
+        addressLine: true,
+        connectionDate: true,
+        zone: {
+          select: {
+            zoneName: true,
+          },
+        },
+      },
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      clients,
+      'Clients fetched successfully',
+    );
+  }
+
   public async getAll(
     page: number,
     limit: number,

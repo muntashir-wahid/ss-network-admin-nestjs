@@ -30,6 +30,11 @@ export class ClientsController {
     return this.clientsService.createBulk(createBulkClientsDto);
   }
 
+  @Get('/bulk')
+  getBulkClients() {
+    return this.clientsService.getBulk();
+  }
+
   @Get()
   getAllClients(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
