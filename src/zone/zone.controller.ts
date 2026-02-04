@@ -16,7 +16,7 @@ import { CreateZoneDto } from './dtos/create-zone.dto';
 import { UpdateZoneDto } from './dtos/update-zone.dto';
 
 @Controller('zones')
-@Roles(Role.SUPER_ADMIN)
+@Roles(Role.SUPER_ADMIN, Role.ADMIN)
 export class ZoneController {
   constructor(private readonly zoneService: ZoneService) {}
 
