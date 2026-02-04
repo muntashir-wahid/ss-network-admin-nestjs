@@ -4,6 +4,7 @@ import {
   DefaultValuePipe,
   Delete,
   Get,
+  Param,
   ParseIntPipe,
   Patch,
   Post,
@@ -47,24 +48,21 @@ export class ClientsController {
     return this.clientsService.getAll(page, limit, search, status, '');
   }
 
-  @Get(':id')
-  getClientById() {
-    // Implementation for fetching a client by ID goes here
-    return {
-      message: 'Fetch client by ID logic not yet implemented',
-    };
+  @Get(':uid')
+  getClientById(@Param('uid') uid: string) {
+    return this.clientsService.findOne(uid);
   }
 
-  @Patch(':id')
-  updateClient() {
+  @Patch(':uid')
+  updateClient(@Param('uid') uid: string) {
     // Implementation for updating a client by ID goes here
     return {
       message: 'Update client logic not yet implemented',
     };
   }
 
-  @Delete(':id')
-  deleteClient() {
+  @Delete(':uid')
+  deleteClient(@Param('uid') uid: string) {
     // Implementation for deleting a client by ID goes here
     return {
       message: 'Delete client logic not yet implemented',

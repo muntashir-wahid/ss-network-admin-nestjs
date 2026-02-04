@@ -119,4 +119,14 @@ export class ClientsService {
       totalClients,
     );
   }
+
+  public async findOne(uid: string) {
+    const client = await this.prismaService.client.findUnique({
+      where: { uid },
+    });
+    return this.responseFormatterService.formatSuccessResponse(
+      client,
+      'Client fetched successfully',
+    );
+  }
 }
