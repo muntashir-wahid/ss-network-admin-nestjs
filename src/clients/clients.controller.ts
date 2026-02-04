@@ -2,11 +2,10 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
-  Delete,
   Get,
   Param,
   ParseIntPipe,
-  Patch,
+  ParseUUIDPipe,
   Post,
   Query,
 } from '@nestjs/common';
@@ -42,10 +41,10 @@ export class ClientsController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('search', new DefaultValuePipe('')) search: string,
     @Query('status', new DefaultValuePipe(Status.ACTIVE)) status: Status,
-    // @Query('zone', ParseUUIDPipe) zone?: string,
+    @Query('zoneUid', new ParseUUIDPipe({ optional: true })) zoneUid?: string,
   ) {
     // Implementation for fetching all clients goes here
-    return this.clientsService.getAll(page, limit, search, status, '');
+    return this.clientsService.getAll(page, limit, search, status, zoneUid);
   }
 
   @Get(':uid')
@@ -53,19 +52,19 @@ export class ClientsController {
     return this.clientsService.findOne(uid);
   }
 
-  @Patch(':uid')
-  updateClient(@Param('uid') uid: string) {
-    // Implementation for updating a client by ID goes here
-    return {
-      message: 'Update client logic not yet implemented',
-    };
-  }
+  // @Patch(':uid')
+  // updateClient(@Param('uid') uid: string) {
+  //   // Implementation for updating a client by ID goes here
+  //   return {
+  //     message: 'Update client logic not yet implemented',
+  //   };
+  // }
 
-  @Delete(':uid')
-  deleteClient(@Param('uid') uid: string) {
-    // Implementation for deleting a client by ID goes here
-    return {
-      message: 'Delete client logic not yet implemented',
-    };
-  }
+  // @Delete(':uid')
+  // deleteClient(@Param('uid') uid: string) {
+  //   // Implementation for deleting a client by ID goes here
+  //   return {
+  //     message: 'Delete client logic not yet implemented',
+  //   };
+  // }
 }

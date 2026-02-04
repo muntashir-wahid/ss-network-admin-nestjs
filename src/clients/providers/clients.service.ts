@@ -65,7 +65,7 @@ export class ClientsService {
     limit: number,
     search: string,
     status: Status,
-    zone?: string,
+    zoneUid?: string,
   ) {
     const clients = await this.prismaService.client.findMany({
       select: {
@@ -83,7 +83,7 @@ export class ClientsService {
       },
       where: {
         status: status,
-        ...(zone ? { zoneId: zone } : {}),
+        ...(zoneUid ? { zoneId: zoneUid } : {}),
         clientName: {
           contains: search,
           mode: 'insensitive',
@@ -93,6 +93,9 @@ export class ClientsService {
           mode: 'insensitive',
         },
       },
+      orderBy: {
+        connectionDate: 'desc',
+      },
       skip: (page - 1) * limit,
       take: limit,
     });
@@ -100,7 +103,7 @@ export class ClientsService {
     const totalClients = await this.prismaService.client.count({
       where: {
         status: status,
-        ...(zone ? { zoneId: zone } : {}),
+        ...(zoneUid ? { zoneId: zoneUid } : {}),
         clientName: {
           contains: search,
           mode: 'insensitive',
