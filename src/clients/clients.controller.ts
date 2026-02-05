@@ -60,6 +60,11 @@ export class ClientsController {
     return this.clientsService.findOne(uid);
   }
 
+  @Get(':uid/payments')
+  getClientPayments(@Param('uid') uid: string) {
+    return this.clientsService.getPaymentsByClientUid(uid);
+  }
+
   @Patch(':uid')
   updateClient(
     @Param('uid') uid: string,

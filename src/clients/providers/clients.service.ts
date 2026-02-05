@@ -175,4 +175,79 @@ export class ClientsService {
       'Client statistics fetched successfully',
     );
   }
+
+  public async getPaymentsByClientUid(uid: string, year?: number) {
+    const currentYear = year || new Date().getFullYear();
+
+    const payments = await this.prismaService.payment.findMany({
+      where: {
+        clientId: uid,
+        paymentYear: currentYear,
+      },
+      select: {
+        uid: true,
+        amount: true,
+        paymentMonth: true,
+        paymentYear: true,
+        createdAt: true,
+        note: true,
+      },
+    });
+
+    // Create a map of payments by month for quick lookup
+    const paymentMap = new Map<number, (typeof payments)[0]>();
+    payments.forEach((payment) => {
+      paymentMap.set(payment.paymentMonth, payment);
+    });
+
+    // Generate all 12 months with payment status
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const monthlyPayments = monthNames.map((monthName, index) => {
+      const month = index + 1;
+      const payment = paymentMap.get(month);
+
+      if (payment) {
+        return {
+          month,
+          monthName,
+          year: currentYear,
+          status: 'COMPLETED',
+          paymentDetails: payment,
+        };
+      } else {
+        return {
+          month,
+          monthName,
+          year: currentYear,
+          status: 'PENDING',
+          paymentDetails: null,
+        };
+      }
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      {
+        year: currentYear,
+        totalMonths: 12,
+        completedPayments: payments.length,
+        pendingPayments: 12 - payments.length,
+        monthlyPayments,
+      },
+      'Client payments fetched successfully',
+    );
+  }
 }
