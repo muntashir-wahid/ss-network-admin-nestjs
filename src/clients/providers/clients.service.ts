@@ -132,4 +132,33 @@ export class ClientsService {
       'Client fetched successfully',
     );
   }
+
+  public async deleteOne(uid: string) {
+    const deletedClient = await this.prismaService.client.update({
+      where: { uid },
+      data: { status: Status.DISABLED },
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      deletedClient,
+      'Client deleted successfully',
+    );
+  }
+
+  public async getClientStats() {
+    const [totalClients, activeClients, disabledClients] = await Promise.all([
+      this.prismaService.client.count(),
+      this.prismaService.client.count({ where: { status: Status.ACTIVE } }),
+      this.prismaService.client.count({ where: { status: Status.DISABLED } }),
+    ]);
+
+    return this.responseFormatterService.formatSuccessResponse(
+      {
+        totalClients,
+        activeClients,
+        disabledClients,
+      },
+      'Client statistics fetched successfully',
+    );
+  }
 }

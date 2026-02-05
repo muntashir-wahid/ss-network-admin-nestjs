@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   DefaultValuePipe,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -25,16 +26,6 @@ export class ClientsController {
     return this.clientsService.create(createClientDto);
   }
 
-  @Post('/bulk')
-  createClientsBulk(@Body() createBulkClientsDto: CreateBulkClientsDto) {
-    return this.clientsService.createBulk(createBulkClientsDto);
-  }
-
-  @Get('/bulk')
-  getBulkClients() {
-    return this.clientsService.getBulk();
-  }
-
   @Get()
   getAllClients(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -45,6 +36,21 @@ export class ClientsController {
   ) {
     // Implementation for fetching all clients goes here
     return this.clientsService.getAll(page, limit, search, status, zoneUid);
+  }
+
+  @Post('/bulk')
+  createClientsBulk(@Body() createBulkClientsDto: CreateBulkClientsDto) {
+    return this.clientsService.createBulk(createBulkClientsDto);
+  }
+
+  @Get('/bulk')
+  getBulkClients() {
+    return this.clientsService.getBulk();
+  }
+
+  @Get('/stats')
+  getClientStats() {
+    return this.clientsService.getClientStats();
   }
 
   @Get(':uid')
@@ -60,11 +66,8 @@ export class ClientsController {
   //   };
   // }
 
-  // @Delete(':uid')
-  // deleteClient(@Param('uid') uid: string) {
-  //   // Implementation for deleting a client by ID goes here
-  //   return {
-  //     message: 'Delete client logic not yet implemented',
-  //   };
-  // }
+  @Delete(':uid')
+  deleteClient(@Param('uid') uid: string) {
+    return this.clientsService.deleteOne(uid);
+  }
 }
