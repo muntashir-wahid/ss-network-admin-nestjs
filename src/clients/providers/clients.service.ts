@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateClientDto } from '../dtos/create-client.dto';
 import { Status } from 'src/generated/prisma/enums';
 import { CreateBulkClientsDto } from '../dtos/create-bulk-clients.dto';
+import UpdateClientDto from '../dtos/update-client.dto';
 
 @Injectable()
 export class ClientsService {
@@ -142,6 +143,19 @@ export class ClientsService {
     return this.responseFormatterService.formatSuccessResponse(
       deletedClient,
       'Client deleted successfully',
+    );
+  }
+
+  public async updateByUid(uid: string, updateClientDto: UpdateClientDto) {
+    // Placeholder for update logic
+    const updatedClient = await this.prismaService.client.update({
+      where: { uid },
+      data: updateClientDto,
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      updatedClient,
+      'Client updated successfully',
     );
   }
 

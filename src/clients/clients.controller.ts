@@ -7,6 +7,7 @@ import {
   Param,
   ParseIntPipe,
   ParseUUIDPipe,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { Role, Status } from 'src/generated/prisma/enums';
 import { ClientsService } from './providers/clients.service';
 import { CreateClientDto } from './dtos/create-client.dto';
 import { CreateBulkClientsDto } from './dtos/create-bulk-clients.dto';
+import UpdateClientDto from './dtos/update-client.dto';
 
 @Controller('clients')
 @Roles(Role.SUPER_ADMIN, Role.ADMIN)
@@ -58,13 +60,14 @@ export class ClientsController {
     return this.clientsService.findOne(uid);
   }
 
-  // @Patch(':uid')
-  // updateClient(@Param('uid') uid: string) {
-  //   // Implementation for updating a client by ID goes here
-  //   return {
-  //     message: 'Update client logic not yet implemented',
-  //   };
-  // }
+  @Patch(':uid')
+  updateClient(
+    @Param('uid') uid: string,
+    @Body() updateClientDto: UpdateClientDto,
+  ) {
+    // Implementation for updating a client by ID goes here
+    return this.clientsService.updateByUid(uid, updateClientDto);
+  }
 
   @Delete(':uid')
   deleteClient(@Param('uid') uid: string) {
