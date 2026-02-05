@@ -67,3 +67,8 @@ export type Area = Prisma.AreaModel
  * 
  */
 export type Client = Prisma.ClientModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
