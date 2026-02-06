@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 import { CreateClientDto } from '../dtos/create-client.dto';
 import { Status } from 'src/generated/prisma/enums';
 import { CreateBulkClientsDto } from '../dtos/create-bulk-clients.dto';
+import UpdateClientDto from '../dtos/update-client.dto';
 
 @Injectable()
 export class ClientsService {
@@ -65,7 +66,7 @@ export class ClientsService {
     limit: number,
     search: string,
     status: Status,
-    zone?: string,
+    zoneUid?: string,
   ) {
     const clients = await this.prismaService.client.findMany({
       select: {
@@ -83,7 +84,7 @@ export class ClientsService {
       },
       where: {
         status: status,
-        ...(zone ? { zoneId: zone } : {}),
+        ...(zoneUid ? { zoneId: zoneUid } : {}),
         clientName: {
           contains: search,
           mode: 'insensitive',
@@ -93,6 +94,9 @@ export class ClientsService {
           mode: 'insensitive',
         },
       },
+      orderBy: {
+        connectionDate: 'desc',
+      },
       skip: (page - 1) * limit,
       take: limit,
     });
@@ -100,7 +104,7 @@ export class ClientsService {
     const totalClients = await this.prismaService.client.count({
       where: {
         status: status,
-        ...(zone ? { zoneId: zone } : {}),
+        ...(zoneUid ? { zoneId: zoneUid } : {}),
         clientName: {
           contains: search,
           mode: 'insensitive',
@@ -117,6 +121,133 @@ export class ClientsService {
       page,
       limit,
       totalClients,
+    );
+  }
+
+  public async findOne(uid: string) {
+    const client = await this.prismaService.client.findUnique({
+      where: { uid },
+    });
+    return this.responseFormatterService.formatSuccessResponse(
+      client,
+      'Client fetched successfully',
+    );
+  }
+
+  public async deleteOne(uid: string) {
+    const deletedClient = await this.prismaService.client.update({
+      where: { uid },
+      data: { status: Status.DISABLED },
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      deletedClient,
+      'Client deleted successfully',
+    );
+  }
+
+  public async updateByUid(uid: string, updateClientDto: UpdateClientDto) {
+    // Placeholder for update logic
+    const updatedClient = await this.prismaService.client.update({
+      where: { uid },
+      data: updateClientDto,
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      updatedClient,
+      'Client updated successfully',
+    );
+  }
+
+  public async getClientStats() {
+    const [totalClients, activeClients, disabledClients] = await Promise.all([
+      this.prismaService.client.count(),
+      this.prismaService.client.count({ where: { status: Status.ACTIVE } }),
+      this.prismaService.client.count({ where: { status: Status.DISABLED } }),
+    ]);
+
+    return this.responseFormatterService.formatSuccessResponse(
+      {
+        totalClients,
+        activeClients,
+        disabledClients,
+      },
+      'Client statistics fetched successfully',
+    );
+  }
+
+  public async getPaymentsByClientUid(uid: string, year?: number) {
+    const currentYear = year || new Date().getFullYear();
+
+    const payments = await this.prismaService.payment.findMany({
+      where: {
+        clientId: uid,
+        paymentYear: currentYear,
+      },
+      select: {
+        uid: true,
+        amount: true,
+        paymentMonth: true,
+        paymentYear: true,
+        createdAt: true,
+        note: true,
+      },
+    });
+
+    // Create a map of payments by month for quick lookup
+    const paymentMap = new Map<number, (typeof payments)[0]>();
+    payments.forEach((payment) => {
+      paymentMap.set(payment.paymentMonth, payment);
+    });
+
+    // Generate all 12 months with payment status
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    const monthlyPayments = monthNames.map((monthName, index) => {
+      const month = index + 1;
+      const payment = paymentMap.get(month);
+
+      if (payment) {
+        return {
+          month,
+          monthName,
+          year: currentYear,
+          status: 'COMPLETED',
+          paymentDetails: payment,
+        };
+      } else {
+        return {
+          month,
+          monthName,
+          year: currentYear,
+          status: 'PENDING',
+          paymentDetails: null,
+        };
+      }
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      {
+        year: currentYear,
+        totalMonths: 12,
+        completedPayments: payments.length,
+        pendingPayments: 12 - payments.length,
+        monthlyPayments,
+      },
+      'Client payments fetched successfully',
     );
   }
 }

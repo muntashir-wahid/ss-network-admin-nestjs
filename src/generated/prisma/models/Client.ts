@@ -281,6 +281,7 @@ export type ClientWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   zone?: Prisma.XOR<Prisma.ZoneScalarRelationFilter, Prisma.ZoneWhereInput>
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type ClientOrderByWithRelationInput = {
@@ -298,6 +299,7 @@ export type ClientOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   zone?: Prisma.ZoneOrderByWithRelationInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -318,6 +320,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   zone?: Prisma.XOR<Prisma.ZoneScalarRelationFilter, Prisma.ZoneWhereInput>
+  payments?: Prisma.PaymentListRelationFilter
 }, "uid" | "contact" | "email" | "userId">
 
 export type ClientOrderByWithAggregationInput = {
@@ -374,6 +377,7 @@ export type ClientCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   zone: Prisma.ZoneCreateNestedOneWithoutClientsInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateInput = {
@@ -390,6 +394,7 @@ export type ClientUncheckedCreateInput = {
   zoneId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientUpdateInput = {
@@ -406,6 +411,7 @@ export type ClientUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   zone?: Prisma.ZoneUpdateOneRequiredWithoutClientsNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateInput = {
@@ -422,6 +428,7 @@ export type ClientUncheckedUpdateInput = {
   zoneId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateManyInput = {
@@ -537,6 +544,11 @@ export type ClientSumOrderByAggregateInput = {
   mpbsProvided?: Prisma.SortOrder
 }
 
+export type ClientScalarRelationFilter = {
+  is?: Prisma.ClientWhereInput
+  isNot?: Prisma.ClientWhereInput
+}
+
 export type ClientCreateNestedManyWithoutZoneInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutZoneInput, Prisma.ClientUncheckedCreateWithoutZoneInput> | Prisma.ClientCreateWithoutZoneInput[] | Prisma.ClientUncheckedCreateWithoutZoneInput[]
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutZoneInput | Prisma.ClientCreateOrConnectWithoutZoneInput[]
@@ -587,6 +599,20 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ClientCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.ClientUpsertWithoutPaymentsInput
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutPaymentsInput, Prisma.ClientUpdateWithoutPaymentsInput>, Prisma.ClientUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type ClientCreateWithoutZoneInput = {
   uid?: string
   contact: string
@@ -600,6 +626,7 @@ export type ClientCreateWithoutZoneInput = {
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutZoneInput = {
@@ -615,6 +642,7 @@ export type ClientUncheckedCreateWithoutZoneInput = {
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutZoneInput = {
@@ -662,6 +690,86 @@ export type ClientScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
 }
 
+export type ClientCreateWithoutPaymentsInput = {
+  uid?: string
+  contact: string
+  email?: string | null
+  userId: string
+  clientName: string
+  addressLine: string
+  connectionDate: Date | string
+  status?: $Enums.Status
+  package: string
+  mpbsProvided?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  zone: Prisma.ZoneCreateNestedOneWithoutClientsInput
+}
+
+export type ClientUncheckedCreateWithoutPaymentsInput = {
+  uid?: string
+  contact: string
+  email?: string | null
+  userId: string
+  clientName: string
+  addressLine: string
+  connectionDate: Date | string
+  status?: $Enums.Status
+  package: string
+  mpbsProvided?: number | null
+  zoneId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ClientCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.ClientWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+}
+
+export type ClientUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutPaymentsInput, Prisma.ClientUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.ClientWhereInput
+}
+
+export type ClientUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.ClientWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutPaymentsInput, Prisma.ClientUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type ClientUpdateWithoutPaymentsInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientName?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine?: Prisma.StringFieldUpdateOperationsInput | string
+  connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  zone?: Prisma.ZoneUpdateOneRequiredWithoutClientsNestedInput
+}
+
+export type ClientUncheckedUpdateWithoutPaymentsInput = {
+  uid?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientName?: Prisma.StringFieldUpdateOperationsInput | string
+  addressLine?: Prisma.StringFieldUpdateOperationsInput | string
+  connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
+  package?: Prisma.StringFieldUpdateOperationsInput | string
+  mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  zoneId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ClientCreateManyZoneInput = {
   uid?: string
   contact: string
@@ -690,6 +798,7 @@ export type ClientUpdateWithoutZoneInput = {
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutZoneInput = {
@@ -705,6 +814,7 @@ export type ClientUncheckedUpdateWithoutZoneInput = {
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateManyWithoutZoneInput = {
@@ -723,6 +833,35 @@ export type ClientUncheckedUpdateManyWithoutZoneInput = {
 }
 
 
+/**
+ * Count Type ClientCountOutputType
+ */
+
+export type ClientCountOutputType = {
+  payments: number
+}
+
+export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  payments?: boolean | ClientCountOutputTypeCountPaymentsArgs
+}
+
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClientCountOutputType
+   */
+  select?: Prisma.ClientCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
 
 export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   uid?: boolean
@@ -739,6 +878,8 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   updatedAt?: boolean
   zone?: boolean | Prisma.ZoneDefaultArgs<ExtArgs>
+  payments?: boolean | Prisma.Client$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -794,6 +935,8 @@ export type ClientSelectScalar = {
 export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "contact" | "email" | "userId" | "clientName" | "addressLine" | "connectionDate" | "status" | "package" | "mpbsProvided" | "zoneId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   zone?: boolean | Prisma.ZoneDefaultArgs<ExtArgs>
+  payments?: boolean | Prisma.Client$paymentsArgs<ExtArgs>
+  _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   zone?: boolean | Prisma.ZoneDefaultArgs<ExtArgs>
@@ -806,6 +949,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Client"
   objects: {
     zone: Prisma.$ZonePayload<ExtArgs>
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     uid: string
@@ -1216,6 +1360,7 @@ readonly fields: ClientFieldRefs;
 export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   zone<T extends Prisma.ZoneDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ZoneDefaultArgs<ExtArgs>>): Prisma.Prisma__ZoneClient<runtime.Types.Result.GetResult<Prisma.$ZonePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  payments<T extends Prisma.Client$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1651,6 +1796,30 @@ export type ClientDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Clients to delete.
    */
   limit?: number
+}
+
+/**
+ * Client.payments
+ */
+export type Client$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

@@ -56,7 +56,8 @@ export const ModelName = {
   InventoryLog: 'InventoryLog',
   Zone: 'Zone',
   Area: 'Area',
-  Client: 'Client'
+  Client: 'Client',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -157,6 +158,20 @@ export const ClientScalarFieldEnum = {
 } as const
 
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  uid: 'uid',
+  clientId: 'clientId',
+  amount: 'amount',
+  paymentYear: 'paymentYear',
+  paymentMonth: 'paymentMonth',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

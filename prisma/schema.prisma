@@ -110,6 +110,24 @@ model Client {
   zoneId         String
   zone           Zone     @relation(fields: [zoneId], references: [uid])
 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  payments  Payment[]
+}
+
+model Payment {
+  uid          String  @id @default(uuid())
+  clientId     String
+  amount       Decimal
+  paymentYear  Int
+  paymentMonth Int
+  note         String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  client Client @relation(fields: [clientId], references: [uid], onDelete: Cascade)
+
+  @@unique([clientId, paymentYear, paymentMonth])
+  @@index([clientId, paymentYear])
 }

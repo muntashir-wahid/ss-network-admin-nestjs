@@ -5,7 +5,7 @@ import { AreasService } from './providers/areas.service';
 import { UpdateAreaDto } from './providers/dtos/update-area.dto';
 
 @Controller('areas')
-@Roles(Role.SUPER_ADMIN)
+@Roles(Role.SUPER_ADMIN, Role.ADMIN)
 export class AreasController {
   constructor(private readonly areasService: AreasService) {}
 
