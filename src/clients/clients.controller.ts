@@ -36,7 +36,6 @@ export class ClientsController {
     @Query('status', new DefaultValuePipe(Status.ACTIVE)) status: Status,
     @Query('zoneUid', new ParseUUIDPipe({ optional: true })) zoneUid?: string,
   ) {
-    // Implementation for fetching all clients goes here
     return this.clientsService.getAll(page, limit, search, status, zoneUid);
   }
 

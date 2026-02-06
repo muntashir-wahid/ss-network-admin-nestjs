@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  ParseIntPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/prisma/enums';
@@ -16,7 +24,10 @@ export class PaymentsController {
   }
 
   @Get()
-  getAllPayments() {
-    return this.paymentsService.findAll();
+  getAllPayments(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  ) {
+    return this.paymentsService.findAll(page, limit);
   }
 }

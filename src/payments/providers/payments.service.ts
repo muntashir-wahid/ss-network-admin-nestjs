@@ -21,7 +21,7 @@ export class PaymentsService {
     );
   }
 
-  public async findAll() {
+  public async findAll(page: number, limit: number) {
     const payments = await this.prismaService.payment.findMany({
       select: {
         uid: true,
@@ -39,13 +39,17 @@ export class PaymentsService {
       orderBy: {
         createdAt: 'desc',
       },
+      skip: (page - 1) * limit,
+      take: limit,
     });
+
+    const totalPayments = await this.prismaService.payment.count();
 
     return this.responseFormatterService.formatPaginatedResponse(
       payments,
-      1,
-      10,
-      payments.length,
+      page,
+      limit,
+      totalPayments,
     );
   }
 }
