@@ -61,8 +61,12 @@ export class ClientsController {
   }
 
   @Get(':uid/payments')
-  getClientPayments(@Param('uid') uid: string) {
-    return this.clientsService.getPaymentsByClientUid(uid);
+  getClientPayments(
+    @Param('uid') uid: string,
+    @Query('year', new DefaultValuePipe(new Date().getFullYear()), ParseIntPipe)
+    year?: number,
+  ) {
+    return this.clientsService.getPaymentsByClientUid(uid, year);
   }
 
   @Patch(':uid')
