@@ -106,6 +106,7 @@ model Client {
   connectionDate DateTime
   status         Status   @default(ACTIVE)
   package        String
+  packagePrice   Decimal  @default(500.00)
   mpbsProvided   Int?
   zoneId         String
   zone           Zone     @relation(fields: [zoneId], references: [uid])

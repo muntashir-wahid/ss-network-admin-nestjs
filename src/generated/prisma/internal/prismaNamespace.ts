@@ -1042,6 +1042,7 @@ export const ClientScalarFieldEnum = {
   connectionDate: 'connectionDate',
   status: 'status',
   package: 'package',
+  packagePrice: 'packagePrice',
   mpbsProvided: 'mpbsProvided',
   zoneId: 'zoneId',
   createdAt: 'createdAt',

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Client" ADD COLUMN     "packagePrice" DECIMAL(65,30) NOT NULL DEFAULT 500.00;

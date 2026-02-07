@@ -27,10 +27,12 @@ export type AggregateClient = {
 }
 
 export type ClientAvgAggregateOutputType = {
+  packagePrice: runtime.Decimal | null
   mpbsProvided: number | null
 }
 
 export type ClientSumAggregateOutputType = {
+  packagePrice: runtime.Decimal | null
   mpbsProvided: number | null
 }
 
@@ -44,6 +46,7 @@ export type ClientMinAggregateOutputType = {
   connectionDate: Date | null
   status: $Enums.Status | null
   package: string | null
+  packagePrice: runtime.Decimal | null
   mpbsProvided: number | null
   zoneId: string | null
   createdAt: Date | null
@@ -60,6 +63,7 @@ export type ClientMaxAggregateOutputType = {
   connectionDate: Date | null
   status: $Enums.Status | null
   package: string | null
+  packagePrice: runtime.Decimal | null
   mpbsProvided: number | null
   zoneId: string | null
   createdAt: Date | null
@@ -76,6 +80,7 @@ export type ClientCountAggregateOutputType = {
   connectionDate: number
   status: number
   package: number
+  packagePrice: number
   mpbsProvided: number
   zoneId: number
   createdAt: number
@@ -85,10 +90,12 @@ export type ClientCountAggregateOutputType = {
 
 
 export type ClientAvgAggregateInputType = {
+  packagePrice?: true
   mpbsProvided?: true
 }
 
 export type ClientSumAggregateInputType = {
+  packagePrice?: true
   mpbsProvided?: true
 }
 
@@ -102,6 +109,7 @@ export type ClientMinAggregateInputType = {
   connectionDate?: true
   status?: true
   package?: true
+  packagePrice?: true
   mpbsProvided?: true
   zoneId?: true
   createdAt?: true
@@ -118,6 +126,7 @@ export type ClientMaxAggregateInputType = {
   connectionDate?: true
   status?: true
   package?: true
+  packagePrice?: true
   mpbsProvided?: true
   zoneId?: true
   createdAt?: true
@@ -134,6 +143,7 @@ export type ClientCountAggregateInputType = {
   connectionDate?: true
   status?: true
   package?: true
+  packagePrice?: true
   mpbsProvided?: true
   zoneId?: true
   createdAt?: true
@@ -237,6 +247,7 @@ export type ClientGroupByOutputType = {
   connectionDate: Date
   status: $Enums.Status
   package: string
+  packagePrice: runtime.Decimal
   mpbsProvided: number | null
   zoneId: string
   createdAt: Date
@@ -276,6 +287,7 @@ export type ClientWhereInput = {
   connectionDate?: Prisma.DateTimeFilter<"Client"> | Date | string
   status?: Prisma.EnumStatusFilter<"Client"> | $Enums.Status
   package?: Prisma.StringFilter<"Client"> | string
+  packagePrice?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.IntNullableFilter<"Client"> | number | null
   zoneId?: Prisma.StringFilter<"Client"> | string
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
@@ -294,6 +306,7 @@ export type ClientOrderByWithRelationInput = {
   connectionDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   package?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrderInput | Prisma.SortOrder
   zoneId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -315,6 +328,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   connectionDate?: Prisma.DateTimeFilter<"Client"> | Date | string
   status?: Prisma.EnumStatusFilter<"Client"> | $Enums.Status
   package?: Prisma.StringFilter<"Client"> | string
+  packagePrice?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.IntNullableFilter<"Client"> | number | null
   zoneId?: Prisma.StringFilter<"Client"> | string
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
@@ -333,6 +347,7 @@ export type ClientOrderByWithAggregationInput = {
   connectionDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   package?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrderInput | Prisma.SortOrder
   zoneId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -357,6 +372,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   connectionDate?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
   status?: Prisma.EnumStatusWithAggregatesFilter<"Client"> | $Enums.Status
   package?: Prisma.StringWithAggregatesFilter<"Client"> | string
+  packagePrice?: Prisma.DecimalWithAggregatesFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.IntNullableWithAggregatesFilter<"Client"> | number | null
   zoneId?: Prisma.StringWithAggregatesFilter<"Client"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Client"> | Date | string
@@ -373,6 +389,7 @@ export type ClientCreateInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -390,6 +407,7 @@ export type ClientUncheckedCreateInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   zoneId: string
   createdAt?: Date | string
@@ -407,6 +425,7 @@ export type ClientUpdateInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -424,6 +443,7 @@ export type ClientUncheckedUpdateInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   zoneId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -441,6 +461,7 @@ export type ClientCreateManyInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   zoneId: string
   createdAt?: Date | string
@@ -457,6 +478,7 @@ export type ClientUpdateManyMutationInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -472,6 +494,7 @@ export type ClientUncheckedUpdateManyInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   zoneId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -498,6 +521,7 @@ export type ClientCountOrderByAggregateInput = {
   connectionDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   package?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrder
   zoneId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -505,6 +529,7 @@ export type ClientCountOrderByAggregateInput = {
 }
 
 export type ClientAvgOrderByAggregateInput = {
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrder
 }
 
@@ -518,6 +543,7 @@ export type ClientMaxOrderByAggregateInput = {
   connectionDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   package?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrder
   zoneId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -534,6 +560,7 @@ export type ClientMinOrderByAggregateInput = {
   connectionDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   package?: Prisma.SortOrder
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrder
   zoneId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -541,6 +568,7 @@ export type ClientMinOrderByAggregateInput = {
 }
 
 export type ClientSumOrderByAggregateInput = {
+  packagePrice?: Prisma.SortOrder
   mpbsProvided?: Prisma.SortOrder
 }
 
@@ -623,6 +651,7 @@ export type ClientCreateWithoutZoneInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -639,6 +668,7 @@ export type ClientUncheckedCreateWithoutZoneInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -684,6 +714,7 @@ export type ClientScalarWhereInput = {
   connectionDate?: Prisma.DateTimeFilter<"Client"> | Date | string
   status?: Prisma.EnumStatusFilter<"Client"> | $Enums.Status
   package?: Prisma.StringFilter<"Client"> | string
+  packagePrice?: Prisma.DecimalFilter<"Client"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.IntNullableFilter<"Client"> | number | null
   zoneId?: Prisma.StringFilter<"Client"> | string
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
@@ -700,6 +731,7 @@ export type ClientCreateWithoutPaymentsInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -716,6 +748,7 @@ export type ClientUncheckedCreateWithoutPaymentsInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   zoneId: string
   createdAt?: Date | string
@@ -748,6 +781,7 @@ export type ClientUpdateWithoutPaymentsInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -764,6 +798,7 @@ export type ClientUncheckedUpdateWithoutPaymentsInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   zoneId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -780,6 +815,7 @@ export type ClientCreateManyZoneInput = {
   connectionDate: Date | string
   status?: $Enums.Status
   package: string
+  packagePrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -795,6 +831,7 @@ export type ClientUpdateWithoutZoneInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -811,6 +848,7 @@ export type ClientUncheckedUpdateWithoutZoneInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -827,6 +865,7 @@ export type ClientUncheckedUpdateManyWithoutZoneInput = {
   connectionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumStatusFieldUpdateOperationsInput | $Enums.Status
   package?: Prisma.StringFieldUpdateOperationsInput | string
+  packagePrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   mpbsProvided?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -873,6 +912,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   connectionDate?: boolean
   status?: boolean
   package?: boolean
+  packagePrice?: boolean
   mpbsProvided?: boolean
   zoneId?: boolean
   createdAt?: boolean
@@ -892,6 +932,7 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   connectionDate?: boolean
   status?: boolean
   package?: boolean
+  packagePrice?: boolean
   mpbsProvided?: boolean
   zoneId?: boolean
   createdAt?: boolean
@@ -909,6 +950,7 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   connectionDate?: boolean
   status?: boolean
   package?: boolean
+  packagePrice?: boolean
   mpbsProvided?: boolean
   zoneId?: boolean
   createdAt?: boolean
@@ -926,13 +968,14 @@ export type ClientSelectScalar = {
   connectionDate?: boolean
   status?: boolean
   package?: boolean
+  packagePrice?: boolean
   mpbsProvided?: boolean
   zoneId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "contact" | "email" | "userId" | "clientName" | "addressLine" | "connectionDate" | "status" | "package" | "mpbsProvided" | "zoneId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"uid" | "contact" | "email" | "userId" | "clientName" | "addressLine" | "connectionDate" | "status" | "package" | "packagePrice" | "mpbsProvided" | "zoneId" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   zone?: boolean | Prisma.ZoneDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.Client$paymentsArgs<ExtArgs>
@@ -961,6 +1004,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     connectionDate: Date
     status: $Enums.Status
     package: string
+    packagePrice: runtime.Decimal
     mpbsProvided: number | null
     zoneId: string
     createdAt: Date
@@ -1399,6 +1443,7 @@ export interface ClientFieldRefs {
   readonly connectionDate: Prisma.FieldRef<"Client", 'DateTime'>
   readonly status: Prisma.FieldRef<"Client", 'Status'>
   readonly package: Prisma.FieldRef<"Client", 'String'>
+  readonly packagePrice: Prisma.FieldRef<"Client", 'Decimal'>
   readonly mpbsProvided: Prisma.FieldRef<"Client", 'Int'>
   readonly zoneId: Prisma.FieldRef<"Client", 'String'>
   readonly createdAt: Prisma.FieldRef<"Client", 'DateTime'>
