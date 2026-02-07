@@ -4,6 +4,7 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsPositive,
   IsString,
@@ -53,6 +54,10 @@ export class CreateClientDto {
   @IsNotEmpty()
   @MaxLength(50)
   package: string;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @IsPositive()
+  packagePrice: number;
 
   @IsOptional()
   @IsInt()
