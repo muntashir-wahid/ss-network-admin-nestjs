@@ -76,9 +76,15 @@ export class ClientsService {
         userId: true,
         package: true,
         addressLine: true,
+        connectionDate: true,
+        mpbsProvided: true,
+        email: true,
+        packagePrice: true,
+        status: true,
         zone: {
           select: {
             zoneName: true,
+            uid: true,
           },
         },
       },
@@ -86,10 +92,6 @@ export class ClientsService {
         status: status,
         ...(zoneUid ? { zoneId: zoneUid } : {}),
         clientName: {
-          contains: search,
-          mode: 'insensitive',
-        },
-        userId: {
           contains: search,
           mode: 'insensitive',
         },
