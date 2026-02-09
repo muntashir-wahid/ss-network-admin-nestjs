@@ -252,4 +252,48 @@ export class ClientsService {
       'Client payments fetched successfully',
     );
   }
+
+  public async getClientListByPaymentStatus(
+    page: number,
+    limit: number,
+    month: number,
+    year: number,
+    status: 'PAID' | 'UNPAID',
+  ) {
+    const filterQuery =
+      status === 'PAID'
+        ? {
+            some: {
+              paymentMonth: month,
+              paymentYear: year,
+            },
+          }
+        : {
+            none: {
+              paymentMonth: month,
+              paymentYear: year,
+            },
+          };
+
+    const clients = await this.prismaService.client.findMany({
+      where: {
+        status: Status.ACTIVE,
+        payments: filterQuery,
+      },
+    });
+
+    const totalClients = await this.prismaService.client.count({
+      where: {
+        status: Status.ACTIVE,
+        payments: filterQuery,
+      },
+    });
+
+    return this.responseFormatterService.formatPaginatedResponse(
+      clients,
+      page,
+      limit,
+      totalClients,
+    );
+  }
 }

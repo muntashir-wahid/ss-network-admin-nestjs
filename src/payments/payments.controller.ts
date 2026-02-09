@@ -43,4 +43,12 @@ export class PaymentsController {
   ) {
     return this.paymentsService.getPaymentStats(month, year);
   }
+
+  @Get('/revenue-stats')
+  getRevenueStats(
+    @Query('year', new DefaultValuePipe(new Date().getFullYear()), ParseIntPipe)
+    year: number,
+  ) {
+    return this.paymentsService.getRevenueStats(year);
+  }
 }

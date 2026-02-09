@@ -54,6 +54,29 @@ export class ClientsController {
     return this.clientsService.getClientStats();
   }
 
+  @Get('/payment-status')
+  getClientsPaymentStatus(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query(
+      'month',
+      new DefaultValuePipe(new Date().getMonth() + 1),
+      ParseIntPipe,
+    )
+    month: number,
+    @Query('year', new DefaultValuePipe(new Date().getFullYear()), ParseIntPipe)
+    year: number,
+    @Query('status', new DefaultValuePipe('PAID')) status: 'PAID' | 'UNPAID',
+  ) {
+    return this.clientsService.getClientListByPaymentStatus(
+      page,
+      limit,
+      month,
+      year,
+      status,
+    );
+  }
+
   @Get(':uid')
   getClientById(@Param('uid') uid: string) {
     return this.clientsService.findOne(uid);

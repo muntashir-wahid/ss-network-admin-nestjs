@@ -83,4 +83,55 @@ export class PaymentsService {
       'Payment statistics retrieved successfully',
     );
   }
+
+  public async getRevenueStats(year: number) {
+    const revenueStats = await this.prismaService.payment.groupBy({
+      by: ['paymentMonth'],
+      where: {
+        paymentYear: year,
+      },
+      _sum: {
+        amount: true,
+      },
+    });
+
+    // Month names array
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    // Create a map of existing months for quick lookup
+    const monthRevenueMap = new Map<number, string>();
+    revenueStats.forEach((stat) => {
+      monthRevenueMap.set(
+        stat.paymentMonth,
+        stat._sum.amount?.toString() || '0',
+      );
+    });
+
+    // Generate data for all 12 months with flattened structure
+    const completeRevenueStats = Array.from({ length: 12 }, (_, index) => {
+      const monthNumber = index + 1;
+      return {
+        month: monthNames[index],
+        amount: monthRevenueMap.get(monthNumber) || '0',
+      };
+    });
+
+    return this.responseFormatterService.formatSuccessResponse(
+      completeRevenueStats,
+      'Revenue statistics retrieved successfully',
+    );
+  }
 }
