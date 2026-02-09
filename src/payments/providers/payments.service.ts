@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ResponseFormatterService } from 'src/common/response-formatter/response-formatter.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreatePaymentDto } from '../dtos/create-payment.dto';
+import { Status } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class PaymentsService {
@@ -50,6 +51,36 @@ export class PaymentsService {
       page,
       limit,
       totalPayments,
+    );
+  }
+
+  public async getPaymentStats(month: number, year: number) {
+    const [totalExecutedPayments, totalPaymentReceived] = await Promise.all([
+      this.prismaService.client.aggregate({
+        where: {
+          status: Status.ACTIVE,
+        },
+        _sum: {
+          packagePrice: true,
+        },
+      }),
+      this.prismaService.payment.aggregate({
+        where: {
+          paymentMonth: month,
+          paymentYear: year,
+        },
+        _sum: {
+          amount: true,
+        },
+      }),
+    ]);
+
+    return this.responseFormatterService.formatSuccessResponse(
+      {
+        totalExecutedPayments: totalExecutedPayments._sum.packagePrice || 0,
+        totalPaymentReceived: totalPaymentReceived._sum.amount || 0,
+      },
+      'Payment statistics retrieved successfully',
     );
   }
 }

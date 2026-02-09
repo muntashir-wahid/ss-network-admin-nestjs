@@ -30,4 +30,17 @@ export class PaymentsController {
   ) {
     return this.paymentsService.findAll(page, limit);
   }
+  @Get('/stats')
+  getPaymentStats(
+    @Query(
+      'month',
+      new DefaultValuePipe(new Date().getMonth() + 1),
+      ParseIntPipe,
+    )
+    month: number,
+    @Query('year', new DefaultValuePipe(new Date().getFullYear()), ParseIntPipe)
+    year: number,
+  ) {
+    return this.paymentsService.getPaymentStats(month, year);
+  }
 }
