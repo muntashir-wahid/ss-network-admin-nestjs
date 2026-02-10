@@ -22,8 +22,21 @@ export class PaymentsService {
     );
   }
 
-  public async findAll(page: number, limit: number) {
+  public async findAll(page: number, limit: number, search: string) {
     const payments = await this.prismaService.payment.findMany({
+      where: {
+        ...(search
+          ? {
+              client: {
+                OR: [
+                  { clientName: { contains: search, mode: 'insensitive' } },
+                  { userId: { contains: search, mode: 'insensitive' } },
+                  { contact: { contains: search, mode: 'insensitive' } },
+                ],
+              },
+            }
+          : {}),
+      },
       select: {
         uid: true,
         amount: true,
@@ -44,7 +57,20 @@ export class PaymentsService {
       take: limit,
     });
 
-    const totalPayments = await this.prismaService.payment.count();
+    const totalPayments = await this.prismaService.payment.count({
+      where: {
+        ...(search
+          ? {
+              client: {
+                OR: [
+                  { clientName: { contains: search, mode: 'insensitive' } },
+                  { userId: { contains: search, mode: 'insensitive' } },
+                ],
+              },
+            }
+          : {}),
+      },
+    });
 
     return this.responseFormatterService.formatPaginatedResponse(
       payments,

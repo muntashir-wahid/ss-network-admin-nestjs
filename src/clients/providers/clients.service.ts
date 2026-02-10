@@ -91,10 +91,15 @@ export class ClientsService {
       where: {
         status: status,
         ...(zoneUid ? { zoneId: zoneUid } : {}),
-        clientName: {
-          contains: search,
-          mode: 'insensitive',
-        },
+        ...(search
+          ? {
+              OR: [
+                { clientName: { contains: search, mode: 'insensitive' } },
+                { userId: { contains: search, mode: 'insensitive' } },
+                { contact: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
       },
       orderBy: {
         connectionDate: 'desc',
@@ -107,14 +112,15 @@ export class ClientsService {
       where: {
         status: status,
         ...(zoneUid ? { zoneId: zoneUid } : {}),
-        clientName: {
-          contains: search,
-          mode: 'insensitive',
-        },
-        userId: {
-          contains: search,
-          mode: 'insensitive',
-        },
+        ...(search
+          ? {
+              OR: [
+                { clientName: { contains: search, mode: 'insensitive' } },
+                { userId: { contains: search, mode: 'insensitive' } },
+                { contact: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
       },
     });
 
