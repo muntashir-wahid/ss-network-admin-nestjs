@@ -286,6 +286,15 @@ export class ClientsService {
         status: Status.ACTIVE,
         payments: filterQuery,
       },
+      select: {
+        uid: true,
+        clientName: true,
+        contact: true,
+        userId: true,
+        addressLine: true,
+        packagePrice: true,
+        connectionDate: true,
+      },
     });
 
     const totalClients = await this.prismaService.client.count({
