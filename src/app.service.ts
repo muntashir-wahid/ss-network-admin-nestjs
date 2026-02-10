@@ -7,7 +7,7 @@ export class AppService {
   getHello() {
     return {
       status: 'success',
-      message: 'SS Network Admin API is running!🚗',
+      message: 'SS Network Admin API is running!',
     };
   }
 }
