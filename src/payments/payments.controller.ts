@@ -27,7 +27,29 @@ export class PaymentsController {
   getAllPayments(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('search', new DefaultValuePipe('')) search: string,
   ) {
-    return this.paymentsService.findAll(page, limit);
+    return this.paymentsService.findAll(page, limit, search);
+  }
+  @Get('/stats')
+  getPaymentStats(
+    @Query(
+      'month',
+      new DefaultValuePipe(new Date().getMonth() + 1),
+      ParseIntPipe,
+    )
+    month: number,
+    @Query('year', new DefaultValuePipe(new Date().getFullYear()), ParseIntPipe)
+    year: number,
+  ) {
+    return this.paymentsService.getPaymentStats(month, year);
+  }
+
+  @Get('/revenue-stats')
+  getRevenueStats(
+    @Query('year', new DefaultValuePipe(new Date().getFullYear()), ParseIntPipe)
+    year: number,
+  ) {
+    return this.paymentsService.getRevenueStats(year);
   }
 }

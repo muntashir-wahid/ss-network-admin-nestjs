@@ -91,10 +91,15 @@ export class ClientsService {
       where: {
         status: status,
         ...(zoneUid ? { zoneId: zoneUid } : {}),
-        clientName: {
-          contains: search,
-          mode: 'insensitive',
-        },
+        ...(search
+          ? {
+              OR: [
+                { clientName: { contains: search, mode: 'insensitive' } },
+                { userId: { contains: search, mode: 'insensitive' } },
+                { contact: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
       },
       orderBy: {
         connectionDate: 'desc',
@@ -107,14 +112,15 @@ export class ClientsService {
       where: {
         status: status,
         ...(zoneUid ? { zoneId: zoneUid } : {}),
-        clientName: {
-          contains: search,
-          mode: 'insensitive',
-        },
-        userId: {
-          contains: search,
-          mode: 'insensitive',
-        },
+        ...(search
+          ? {
+              OR: [
+                { clientName: { contains: search, mode: 'insensitive' } },
+                { userId: { contains: search, mode: 'insensitive' } },
+                { contact: { contains: search, mode: 'insensitive' } },
+              ],
+            }
+          : {}),
       },
     });
 
@@ -250,6 +256,59 @@ export class ClientsService {
         monthlyPayments,
       },
       'Client payments fetched successfully',
+    );
+  }
+
+  public async getClientListByPaymentStatus(
+    page: number,
+    limit: number,
+    month: number,
+    year: number,
+    status: 'PAID' | 'UNPAID',
+  ) {
+    const filterQuery =
+      status === 'PAID'
+        ? {
+            some: {
+              paymentMonth: month,
+              paymentYear: year,
+            },
+          }
+        : {
+            none: {
+              paymentMonth: month,
+              paymentYear: year,
+            },
+          };
+
+    const clients = await this.prismaService.client.findMany({
+      where: {
+        status: Status.ACTIVE,
+        payments: filterQuery,
+      },
+      select: {
+        uid: true,
+        clientName: true,
+        contact: true,
+        userId: true,
+        addressLine: true,
+        packagePrice: true,
+        connectionDate: true,
+      },
+    });
+
+    const totalClients = await this.prismaService.client.count({
+      where: {
+        status: Status.ACTIVE,
+        payments: filterQuery,
+      },
+    });
+
+    return this.responseFormatterService.formatPaginatedResponse(
+      clients,
+      page,
+      limit,
+      totalClients,
     );
   }
 }
